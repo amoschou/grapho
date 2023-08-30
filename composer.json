@@ -1,0 +1,28 @@
+{
+    "name": "amoschou/grapho",
+    "description": "Create book as a Laravel app from a folder of Markdown files.",
+    "homepage": "https://github.com/amoschou/grapho",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "amoschou",
+            "email": "4948673+amoschou@users.noreply.github.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "AMoschou\\Grapho\\": "src/",
+            "AMoschou\\Grapho\\App\\": "src/app/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": false,
+    "extra": {
+        "laravel": {
+            "providers": [
+                "AMoschou\\Grapho\\App\\Providers\\ServiceProvider"
+            ]
+        }
+    }
+}
