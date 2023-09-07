@@ -8,7 +8,16 @@ use Illuminate\Support\Facades\Route;
 use League\CommonMark\Extension\FrontMatter\FrontMatterExtension;
 use League\CommonMark\GithubFlavoredMarkdownConverter;
 
-Route::prefix(config('grapho.route_prefix'))->name('grapho.')->group(function () {
+$middleware = match (config('grapho.starter_kit')) {
+    'jetstream' => [
+        'auth:sanctum',
+        config('jetstream.auth_session'),
+        'verified',
+    ],
+    default => [],
+};
+
+Route::middleware($middleware)->group(function () {
     Route::get('/', function () {
         $tocNode = GraphoController::tableOfContents();
 

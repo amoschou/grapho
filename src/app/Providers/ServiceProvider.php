@@ -29,7 +29,9 @@ class ServiceProvider extends BaseServiceProvider
             $this->path('config/private.php'), 'grapho'
         );
 
-        $this->loadRoutesFrom($this->path('routes/web.php'));
+        Route::prefix(config('grapho.route_prefix'))->name('grapho.')->middleware('web')->group(function () {
+            $this->loadRoutesFrom($this->path('routes/web.php'));
+        });
 
         $this->loadViewsFrom($this->path('resources/views'), 'grapho');
 
