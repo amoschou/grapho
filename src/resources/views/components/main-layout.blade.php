@@ -19,6 +19,7 @@
                 <h2>{{ config('app.name', 'Laravel') }}</h2>
             </header>
             <nav>
+                <x-grapho::auth-links></x-grapho::auth-links>
                 <x-grapho::toc></x-grapho::toc>
                 <x-grapho::breadcrumbs :breadcrumbs="$breadcrumbs"></x-grahpo::breadcrumbs>
                 <hr>
