@@ -9,6 +9,7 @@ use League\CommonMark\Extension\FrontMatter\FrontMatterExtension;
 use League\CommonMark\GithubFlavoredMarkdownConverter;
 
 $middleware = match (config('grapho.starter_kit')) {
+    'breeze' => ['auth'],
     'jetstream' => [
         'auth:sanctum',
         config('jetstream.auth_session'),
@@ -16,6 +17,8 @@ $middleware = match (config('grapho.starter_kit')) {
     ],
     default => [],
 };
+
+$middleware = config('grapho.middleware'); // Apply this explicitly. For future, apply middleware as above according to starter kit?
 
 Route::middleware($middleware)->group(function () {
     Route::get('/', function () {
