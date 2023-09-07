@@ -9,11 +9,11 @@ Require the package with:
 composer require amoschou/grapho
 ```
 
-Then publish the vendor files:
+Then publish the vendor files, if desired:
 ```
-php artisan vendor:publish
+php artisan vendor:publish --tag=grapho-config
+php artisan vendor:publish --tag=grapho-views
 ```
-Select the tag `grapho-config` to publish the config file or `grapho-views` to publish the views.
 
 ## Configuration
 
