@@ -4,6 +4,7 @@ namespace AMoschou\Grapho\App\Providers;
  
 use Illuminate\Contracts\Foundation\Application;
 // use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
  
 class ServiceProvider extends BaseServiceProvider
