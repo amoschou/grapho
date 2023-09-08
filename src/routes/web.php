@@ -3,6 +3,7 @@
 use AMoschou\Grapho\App\Classes\DocFile;
 use AMoschou\Grapho\App\Classes\DocFolder;
 use AMoschou\Grapho\App\Http\Controllers\GraphoController;
+use AMoschou\Grapho\App\Models\GraphoComment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -27,7 +28,7 @@ Route::middleware($middleware)->group(function () {
     Route::get('/', function () {
         $tocNode = GraphoController::tableOfContents();
 
-        $comments = DB::table('grapho_comments')->where('path', '')->orderBy('created_at')->get();
+        $comments = GraphoComment::where('path', '')->orderBy('created_at')->get();
 
         return view('grapho::page', [
             'htmlContent' => '',
@@ -78,7 +79,7 @@ Route::middleware($middleware)->group(function () {
 
         $tocNode = GraphoController::tableOfContents();
 
-        $comments = DB::table('grapho_comments')->where('path', $path)->orderBy('created_at')->get();
+        $comments = GraphoComment::where('path', $path)->orderBy('created_at')->get();
 
         return view('grapho::page', [
             'htmlContent' => $htmlContent,
