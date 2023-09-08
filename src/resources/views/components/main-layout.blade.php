@@ -27,8 +27,26 @@
             <section>{{ $slot }}</section>
             <footer>
                 <hr>
+
                 <p>
-                    @if ($updateTime) Last updated: {{ $updateTime }} @endif &emsp;<a href="{{ $editLink }}" target="_blank">Edit this page</a></p>
+                    @if ($updateTime) Last updated: {{ $updateTime }} @endif &emsp;<a href="{{ $editLink }}" target="_blank">Edit this page</a>
+                </p>
+
+                <div>
+                    <h4>Comments</h4>
+
+                    <form method="POST" action="{{ route('grapho.comment.create') }}">
+                        @csrf
+                        <textarea rows="6" cols="80" name="comment"></textarea>
+                        <button type="submit">Save</button>
+                    </form>
+
+                    @foreach ($comments as $comment)
+                        <div>
+                            <p>{{ $comment->user->name }} ({{ $comment->created_at }})</p>
+                        </div>
+                    @endforeach
+                </div>
             </footer>
         </div>
     </body>

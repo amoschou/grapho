@@ -4,6 +4,7 @@ use AMoschou\Grapho\App\Classes\DocFile;
 use AMoschou\Grapho\App\Classes\DocFolder;
 use AMoschou\Grapho\App\Http\Controllers\GraphoController;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use League\CommonMark\Extension\FrontMatter\FrontMatterExtension;
 use League\CommonMark\GithubFlavoredMarkdownConverter;
@@ -71,11 +72,14 @@ Route::middleware($middleware)->group(function () {
 
         $tocNode = GraphoController::tableOfContents();
 
+        $comments = DB::table('grapho_comments')->where('path', $path)->orderBy('created_at')->get();
+
         return view('grapho::page', [
             'htmlContent' => $htmlContent,
             'editLink' => $editLink,
             'breadcrumbs' => $breadcrumbs,
             'updateTime' => $updateTime,
+            'comments' => $comments,
         ]);
     })->where('path', '.+')->name('path');
 });
