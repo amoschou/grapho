@@ -83,4 +83,8 @@ Route::middleware($middleware)->group(function () {
             'comments' => $comments,
         ]);
     })->where('path', '.+')->name('path');
+
+    Route::post('/{path}', function ($path) {
+        ;
+    })->where('path', '.+')->name('path.comment.create');
 });

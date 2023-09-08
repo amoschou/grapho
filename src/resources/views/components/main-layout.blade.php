@@ -35,7 +35,7 @@
                 <div>
                     <h4>Comments</h4>
 
-                    <form method="POST" action="{{ route('grapho.comment.create') }}">
+                    <form method="POST" action="{{ route('grapho.path.comment.create') }}">
                         @csrf
                         <textarea rows="6" cols="80" name="comment"></textarea>
                         <button type="submit">Save</button>
