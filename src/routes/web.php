@@ -32,7 +32,7 @@ Route::middleware($middleware)->group(function () {
             'breadcrumbs' => [],
             'updateTime' => null,
             'comments' => [],
-            'path' => null,
+            'path' => '',
         ]);
     })->name('home');
 
@@ -88,5 +88,5 @@ Route::middleware($middleware)->group(function () {
 
     Route::post('/{path}', function ($path) {
         ;
-    })->where('path', '.+')->name('path.comment.create');
+    })->where('path', '.*')->name('path.comment.create');
 });
