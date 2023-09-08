@@ -13,10 +13,12 @@ return new class extends Migration
     {
         Schema::create('grapho_comments', function (Blueprint $table) {
             $table->id();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->unsignedBigInteger('user_id');
             $table->text('path');
             $table->text('comment');
             $table->timestampsTz();
+
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
