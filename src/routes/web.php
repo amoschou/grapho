@@ -31,6 +31,7 @@ Route::middleware($middleware)->group(function () {
             'editLink' => '#',
             'breadcrumbs' => [],
             'updateTime' => null,
+            'comments' => [],
         ]);
     })->name('home');
 
