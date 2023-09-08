@@ -2,6 +2,7 @@
     'editLink',
     'breadcrumbs',
     'updateTime',
+    'path',
 ])
 
 <!DOCTYPE html>
@@ -35,7 +36,7 @@
                 <div>
                     <h4>Comments</h4>
 
-                    <form method="POST" action="{{ route('grapho.path.comment.create') }}">
+                    <form method="POST" action="{{ route('grapho.path.comment.create', ['path' => '']) }}">
                         @csrf
                         <textarea rows="6" cols="80" name="comment"></textarea>
                         <button type="submit">Save</button>

@@ -32,6 +32,7 @@ Route::middleware($middleware)->group(function () {
             'breadcrumbs' => [],
             'updateTime' => null,
             'comments' => [],
+            'path' => null,
         ]);
     })->name('home');
 
@@ -81,6 +82,7 @@ Route::middleware($middleware)->group(function () {
             'breadcrumbs' => $breadcrumbs,
             'updateTime' => $updateTime,
             'comments' => $comments,
+            'path' => $path,
         ]);
     })->where('path', '.+')->name('path');
 
