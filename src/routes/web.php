@@ -100,6 +100,8 @@ Route::middleware($middleware)->group(function () {
             'user_id' => Auth::id(),
             'path' => '',
             'comment' => $validatedData['comment'],
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
 
         return redirect()->route('grapho.home');
@@ -114,6 +116,8 @@ Route::middleware($middleware)->group(function () {
             'user_id' => Auth::id(),
             'path' => $path,
             'comment' => $validatedData['comment'],
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
 
         return redirect()->route('grapho.path', ['path' => $path]);

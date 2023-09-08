@@ -45,7 +45,8 @@
 
                     @foreach ($comments as $comment)
                         <div>
-                            <p>{{ $comment->user->name }} ({{ $comment->created_at }})</p>
+                            <p><strong>{{ $comment->user->name }} ({{ $comment->created_at }}):</strong></p>
+                            <p>{{ $comment->comment }}</p>
                         </div>
                     @endforeach
                 </div>
