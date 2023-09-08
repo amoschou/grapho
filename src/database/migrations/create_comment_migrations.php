@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreign('user_id')->references('id')->on('users');
             $table->text('path');
-            $table->text('comment')
+            $table->text('comment');
             $table->timestampsTz();
         });
     }
