@@ -16,7 +16,7 @@ class GraphoComment extends Model
     /**
      * Get the author of the comment.
      */
-    public function post(): BelongsTo
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
