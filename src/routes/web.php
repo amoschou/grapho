@@ -86,7 +86,13 @@ Route::middleware($middleware)->group(function () {
         ]);
     })->where('path', '.+')->name('path');
 
-    Route::post('/{path}', function ($path) {
+    Route::post('/', function (Request $request) {
+        dd($request->all()); 
+        ;
+    })->name('home.comment.create');
+
+    Route::post('/{path}', function ($path, Request $request) {
+        dd($request->all()); 
         ;
     })->where('path', '.+')->name('path.comment.create');
 });
