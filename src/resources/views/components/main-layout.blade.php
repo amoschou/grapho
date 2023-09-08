@@ -3,6 +3,7 @@
     'breadcrumbs',
     'updateTime',
     'path',
+    'comments',
 ])
 
 <!DOCTYPE html>
