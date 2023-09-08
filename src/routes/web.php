@@ -32,7 +32,7 @@ Route::middleware($middleware)->group(function () {
             'breadcrumbs' => [],
             'updateTime' => null,
             'comments' => [],
-            'path' => '#',
+            'path' => null,
         ]);
     })->name('home');
 
