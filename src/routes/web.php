@@ -5,6 +5,7 @@ use AMoschou\Grapho\App\Classes\DocFolder;
 use AMoschou\Grapho\App\Http\Controllers\GraphoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use League\CommonMark\Extension\FrontMatter\FrontMatterExtension;
@@ -26,13 +27,15 @@ Route::middleware($middleware)->group(function () {
     Route::get('/', function () {
         $tocNode = GraphoController::tableOfContents();
 
+        $comments = DB::table('grapho_comments')->where('path', '')->orderBy('created_at')->get();
+
         return view('grapho::page', [
             'htmlContent' => '',
             'tocNode' => $tocNode,
             'editLink' => '#',
             'breadcrumbs' => [],
             'updateTime' => null,
-            'comments' => [],
+            'comments' => $comments,
             'path' => null,
         ]);
     })->name('home');
@@ -88,12 +91,30 @@ Route::middleware($middleware)->group(function () {
     })->where('path', '.+')->name('path');
 
     Route::post('/', function (Request $request) {
-        dd($request->all()); 
-        ;
+        $validatedData = $request->validate([
+            'comment' => ['required'],
+        ]);
+
+        DB::table('grapho_comments')->insert([
+            'user_id' => Auth::id(),
+            'path' => '',
+            'comment' => $validatedData['comment'],
+        ]);
+
+        return redirect()->route('grapho.home');
     })->name('home.comment.create');
 
     Route::post('/{path}', function ($path, Request $request) {
-        dd($request->all()); 
-        ;
+        $validatedData = $request->validate([
+            'comment' => ['required'],
+        ]);
+
+        DB::table('grapho_comments')->insert([
+            'user_id' => Auth::id(),
+            'path' => $path,
+            'comment' => $validatedData['comment'],
+        ]);
+
+        return redirect()->route('grapho.path', ['path' => $path]);
     })->where('path', '.+')->name('path.comment.create');
 });
