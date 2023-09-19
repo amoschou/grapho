@@ -24,6 +24,7 @@
                 <x-grapho::auth-links></x-grapho::auth-links>
                 <x-grapho::toc></x-grapho::toc>
                 <x-grapho::breadcrumbs :breadcrumbs="$breadcrumbs"></x-grahpo::breadcrumbs>
+                <p><a href="{{ route('path', ['path' => $path, 'pdf' => '']) }}">Download PDF</a></p>
                 <hr>
             </nav>
             <section>{{ $slot }}</section>

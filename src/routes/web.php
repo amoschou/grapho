@@ -98,11 +98,11 @@ Route::middleware($middleware)->group(function () {
 
             $output = WeasyPrint::prepareSource($renderable)->build();
 
-            $filename = $pathArray[count($pathArray) - 1] . '.pdf';
+            $pdfFilename = $pathArray[count($pathArray) - 1] . '.pdf';
 
             return match ($method) {
-                'download' => $output->download($filename),
-                default => $output->inline($filename),
+                'download' => $output->download($pdfFilename),
+                default => $output->inline($pdfFilename),
             };
         }
 
