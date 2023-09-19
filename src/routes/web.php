@@ -31,7 +31,7 @@ Route::middleware($middleware)->group(function () {
 
         $comments = GraphoComment::where('path', '')->orderBy('created_at')->get();
 
-        return view('grapho::page', [
+        $renderable = view('grapho::page', [
             'htmlContent' => '',
             'tocNode' => $tocNode,
             'editLink' => '#',
@@ -40,6 +40,23 @@ Route::middleware($middleware)->group(function () {
             'comments' => $comments,
             'path' => null,
         ]);
+
+        $pdf = array_key_exists('pdf', request()->query());
+
+        if ($pdf) {
+            $method = request()->query('pdf', 'inline');
+
+            $output = WeasyPrint::prepareSource($renderable)->build();
+
+            $pdfFilename = 'home.pdf';
+
+            return match ($method) {
+                'download' => $output->download($pdfFilename),
+                default => $output->inline($pdfFilename),
+            };
+        }
+
+        return $renderable;
     })->name('home');
 
     Route::get('/{path}', function (string $path) {
