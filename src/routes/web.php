@@ -89,7 +89,21 @@ Route::middleware($middleware)->group(function () {
 
         $result = (new FrontMatterExtension())->getFrontMatterParser()->parse(file_get_contents($absolutePath));
 
-        $htmlContent = (new GithubFlavoredMarkdownConverter())->convert($result->getContent());
+        $md = $result->getContent();
+
+        // $htmlContent = (new GithubFlavoredMarkdownConverter())->convert($md);
+
+        $token = config('grapho.github_api_token');
+
+        $response = Http::accept('application/vnd.github+json')
+            ->withToken($token)
+            ->withHeaders([
+                'X-GitHub-Api-Version' => '2022-11-28',
+            ])->post('https://api.github.com/markdown', [
+                'text' => $md
+            ]);
+        
+        $htmlContent = response->body();
 
         $editLink = 'https://github.com/' . config('grapho.github_repo') . "/edit/main/{$path}.md";
 

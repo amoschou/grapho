@@ -17,6 +17,8 @@ return [
 
     'github_repo' => 'githubusername/repositoryname',
 
+    'github_api_token' => env('GH_API_TOKEN'),
+
     /*
     |--------------------------------------------------------------------------
     | Routes and middleware
