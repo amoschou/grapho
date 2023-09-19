@@ -103,6 +103,7 @@ Route::middleware($middleware)->group(function () {
                 'text' => $md,
                 'mode' => 'gfm',
             ]);
+        // Todo: Somehow include cURL "-L" option here.
         
         $htmlContent = $response->body();
 
