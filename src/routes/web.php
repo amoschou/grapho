@@ -96,7 +96,7 @@ Route::middleware($middleware)->group(function () {
         if ($pdf) {
             $method = request()->query('pdf', 'inline');
 
-            $output = WeasyPrint::prepareSource($htmlContent)->build();
+            $output = WeasyPrint::prepareSource($renderable)->build();
 
             $filename = $pathArray[count($pathArray) - 1] . '.pdf';
 
