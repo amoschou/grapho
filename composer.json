@@ -9,7 +9,9 @@
             "email": "4948673+amoschou@users.noreply.github.com"
         }
     ],
-    "require": {},
+    "require": {
+        "rockett/weasyprint": "^7.0"
+    },
     "autoload": {
         "psr-4": {
             "AMoschou\\Grapho\\": "src/",

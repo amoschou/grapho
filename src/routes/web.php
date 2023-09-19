@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use League\CommonMark\Extension\FrontMatter\FrontMatterExtension;
 use League\CommonMark\GithubFlavoredMarkdownConverter;
+use WeasyPrint\Facade as WeasyPrint;
 
 $middleware = match (config('grapho.starter_kit')) {
     'breeze' => ['auth'],
@@ -81,7 +82,7 @@ Route::middleware($middleware)->group(function () {
 
         $comments = GraphoComment::where('path', $path)->orderBy('created_at')->get();
 
-        return view('grapho::page', [
+        $renderable = view('grapho::page', [
             'htmlContent' => $htmlContent,
             'editLink' => $editLink,
             'breadcrumbs' => $breadcrumbs,
@@ -89,6 +90,23 @@ Route::middleware($middleware)->group(function () {
             'comments' => $comments,
             'path' => $path,
         ]);
+
+        $pdf = array_key_exists('pdf', request()->query());
+
+        if ($pdf) {
+            $method = request()->query('pdf', 'inline');
+
+            $output = WeasyPrint::prepareSource($htmlContent)->build();
+
+            $filename = $pathArray[count($pathArray) - 1] . '.pdf';
+
+            return match ($method) {
+                'download' => $output->download($filename),
+                default => $output->inline($filename),
+            };
+        }
+
+        return $renderable;
     })->where('path', '.+')->name('path');
 
     Route::post('/', function (Request $request) {
