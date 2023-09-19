@@ -24,7 +24,13 @@
                 <x-grapho::auth-links></x-grapho::auth-links>
                 <x-grapho::toc></x-grapho::toc>
                 <x-grapho::breadcrumbs :breadcrumbs="$breadcrumbs"></x-grahpo::breadcrumbs>
-                <p><a href="{{ route('grapho.path', ['path' => $path, 'pdf' => '']) }}">Download PDF</a></p>
+                <div>
+                    @if (is_null($path))
+                        <a href="{{ route('grapho.path', ['pdf' => 'inline']) }}">Download PDF</a>
+                    @else
+                        <a href="{{ route('grapho.path', ['path' => $path, 'pdf' => 'inline']) }}">Download PDF</a>
+                    @endif
+                </div>
                 <hr>
             </nav>
             <section>{{ $slot }}</section>
