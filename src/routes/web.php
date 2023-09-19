@@ -103,7 +103,7 @@ Route::middleware($middleware)->group(function () {
                 'text' => $md
             ]);
         
-        $htmlContent = response->body();
+        $htmlContent = $response->body();
 
         $editLink = 'https://github.com/' . config('grapho.github_repo') . "/edit/main/{$path}.md";
 
