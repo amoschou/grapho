@@ -100,7 +100,8 @@ Route::middleware($middleware)->group(function () {
             ->withHeaders([
                 'X-GitHub-Api-Version' => '2022-11-28',
             ])->post('https://api.github.com/markdown', [
-                'text' => $md
+                'text' => $md,
+                'mode' => 'gfm',
             ]);
         
         $htmlContent = $response->body();
