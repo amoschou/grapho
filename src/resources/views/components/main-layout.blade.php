@@ -26,7 +26,7 @@
                 <x-grapho::breadcrumbs :breadcrumbs="$breadcrumbs"></x-grahpo::breadcrumbs>
                 <div>
                     @if (is_null($path))
-                        <a href="{{ route('grapho.path', ['pdf' => 'inline']) }}">Download PDF</a>
+                        <a href="{{ route('grapho.home', ['pdf' => 'inline']) }}">Download PDF</a>
                     @else
                         <a href="{{ route('grapho.path', ['path' => $path, 'pdf' => 'inline']) }}">Download PDF</a>
                     @endif
