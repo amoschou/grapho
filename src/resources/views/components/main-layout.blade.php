@@ -41,8 +41,9 @@
             .markdown-body .color-note { color: #0969DA; }
             .markdown-body .color-important { color: #8250df; }
             .markdown-body .color-warning { color: #9A6700; }
-        </style>
-        
+
+            .material-symbols-sharp { font-variation-settings: 'FILL' 1, 'wght' 600, 'GRAD' 0, 'opsz' 24; }
+</style>        
     </head>
     <body>
         <div>
@@ -93,13 +94,13 @@
                 bq = p.parentElement;
                 if (p.innerHTML.startsWith('[!NOTE]<br>')) {
                     bq.classList.add('note');
-                    p.innerHTML = p.innerHTML.replace('[!NOTE]<br>', '<span class="color-warning"><span class="material-symbols-outlined">note</span> <strong>Note:</strong></span><br>');
+                    p.innerHTML = p.innerHTML.replace('[!NOTE]<br>', '<span class="color-warning"><span class="material-symbols-sharp">note</span> <strong>Note:</strong></span><br>');
                 } else if (p.innerHTML.startsWith('[!IMPORTANT]<br>')) {
                     bq.classList.add('important');
-                    p.innerHTML = p.innerHTML.replace('[!IMPORTANT]<br>', '<span class="color-warning"><span class="material-symbols-outlined">feedback</span> <strong>Important:</strong></span><br>');
+                    p.innerHTML = p.innerHTML.replace('[!IMPORTANT]<br>', '<span class="color-warning"><span class="material-symbols-sharp">feedback</span> <strong>Important:</strong></span><br>');
                 } else if (p.innerHTML.startsWith('[!WARNING]<br>')) {
                     bq.classList.add('warning');
-                    p.innerHTML = p.innerHTML.replace('[!WARNING]<br>', '<span class="color-warning"><span class="material-symbols-outlined">warning</span> <strong>Warning:</strong></span><br>');
+                    p.innerHTML = p.innerHTML.replace('[!WARNING]<br>', '<span class="color-warning"><span class="material-symbols-sharp">warning</span> <strong>Warning:</strong></span><br>');
                 }
             });
         </script>
