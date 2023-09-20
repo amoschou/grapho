@@ -77,6 +77,17 @@
                 </div>
             </footer>
         </div>
+        <script>
+            document.querySelectorAll('blockquote > p:first-child').forEach((p) => {
+                if (p.innerHTML.startsWith('[!NOTE]<br>')) {
+                    p.innerHTML = p.innerHTML.replace('[!NOTE]<br>', '<strong>Note:</strong><br>');
+                } else if (p.innerHTML.startsWith('[!IMPORTANT]<br>')) {
+                    p.innerHTML = p.innerHTML.replace('[!IMPORTANT]<br>', '<strong>Important:</strong><br>');
+                } else if (p.innerHTML.startsWith('[!WARNING]<br>')) {
+                    p.innerHTML = p.innerHTML.replace('[!WARNING]<br>', '<strong>Warning:</strong><br>');
+                }
+            });
+        </script>
     </body>
 </html>
 
