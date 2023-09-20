@@ -94,7 +94,7 @@
                 bq = p.parentElement;
                 if (p.innerHTML.startsWith('[!NOTE]<br>')) {
                     bq.classList.add('note');
-                    p.innerHTML = p.innerHTML.replace('[!NOTE]<br>', '<span class="color-note"><span class="material-symbols-sharp">note</span> <strong>Note:</strong></span><br>');
+                    p.innerHTML = p.innerHTML.replace('[!NOTE]<br>', '<span class="color-note"><span class="material-symbols-sharp">info</span> <strong>Note:</strong></span><br>');
                 } else if (p.innerHTML.startsWith('[!IMPORTANT]<br>')) {
                     bq.classList.add('important');
                     p.innerHTML = p.innerHTML.replace('[!IMPORTANT]<br>', '<span class="color-important"><span class="material-symbols-sharp">feedback</span> <strong>Important:</strong></span><br>');
