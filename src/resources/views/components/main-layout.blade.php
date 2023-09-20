@@ -17,6 +17,8 @@
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.2.0/github-markdown.min.css" integrity="sha512-Ya9H+OPj8NgcQk34nCrbehaA0atbzGdZCI2uCbqVRELgnlrh8vQ2INMnkadVMSniC54HChLIh5htabVuKJww8g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+        
         <style>
             .markdown-body {
                 box-sizing: border-box;
@@ -40,6 +42,7 @@
             .markdown-body .color-important { color: #8250df; }
             .markdown-body .color-warning { color: #9A6700; }
         </style>
+        
     </head>
     <body>
         <div>
@@ -90,13 +93,13 @@
                 bq = p.parentElement;
                 if (p.innerHTML.startsWith('[!NOTE]<br>')) {
                     bq.classList.add('note');
-                    p.innerHTML = p.innerHTML.replace('[!NOTE]<br>', '<strong class="color-note">Note:</strong><br>');
+                    p.innerHTML = p.innerHTML.replace('[!NOTE]<br>', '<span class="color-warning"><span class="material-symbols-outlined">note</span> <strong>Note:</strong></span><br>');
                 } else if (p.innerHTML.startsWith('[!IMPORTANT]<br>')) {
                     bq.classList.add('important');
-                    p.innerHTML = p.innerHTML.replace('[!IMPORTANT]<br>', '<strong class="color-important">Important:</strong><br>');
+                    p.innerHTML = p.innerHTML.replace('[!IMPORTANT]<br>', '<span class="color-warning"><span class="material-symbols-outlined">feedback</span> <strong>Important:</strong></span><br>');
                 } else if (p.innerHTML.startsWith('[!WARNING]<br>')) {
                     bq.classList.add('warning');
-                    p.innerHTML = p.innerHTML.replace('[!WARNING]<br>', '<strong class="color-warning">Warning:</strong><br>');
+                    p.innerHTML = p.innerHTML.replace('[!WARNING]<br>', '<span class="color-warning"><span class="material-symbols-outlined">warning</span> <strong>Warning:</strong></span><br>');
                 }
             });
         </script>
