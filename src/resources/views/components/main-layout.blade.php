@@ -79,11 +79,15 @@
         </div>
         <script>
             document.querySelectorAll('blockquote > p:first-child').forEach((p) => {
+                bq = p.parentElement;
                 if (p.innerHTML.startsWith('[!NOTE]<br>')) {
+                    bq.classList.add('note');
                     p.innerHTML = p.innerHTML.replace('[!NOTE]<br>', '<strong>Note:</strong><br>');
                 } else if (p.innerHTML.startsWith('[!IMPORTANT]<br>')) {
+                    bq.classList.add('important');
                     p.innerHTML = p.innerHTML.replace('[!IMPORTANT]<br>', '<strong>Important:</strong><br>');
                 } else if (p.innerHTML.startsWith('[!WARNING]<br>')) {
+                    bq.classList.add('warning');
                     p.innerHTML = p.innerHTML.replace('[!WARNING]<br>', '<strong>Warning:</strong><br>');
                 }
             });
