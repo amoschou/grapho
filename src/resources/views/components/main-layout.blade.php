@@ -42,7 +42,7 @@
             .markdown-body .color-important { color: #8250df; }
             .markdown-body .color-warning { color: #9A6700; }
 
-            .material-symbols-sharp { font-variation-settings: 'FILL' 1, 'wght' 600, 'GRAD' 0, 'opsz' 24; }
+            .material-symbols-sharp { vertical-align: -6px; font-variation-settings: 'FILL' 1, 'wght' 600, 'GRAD' 0, 'opsz' 24; }
 </style>        
     </head>
     <body>
