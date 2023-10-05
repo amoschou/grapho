@@ -11,7 +11,7 @@
     ],
     "require": {
         "amoschou/commonmark-alert-extension": "dev-main",
-        "rockett/weasyprint": "^7.0",
+        "rockett/weasyprint": "^7.0"
     },
     "autoload": {
         "psr-4": {
