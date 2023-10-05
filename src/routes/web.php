@@ -13,6 +13,14 @@ use League\CommonMark\Extension\FrontMatter\FrontMatterExtension;
 use League\CommonMark\GithubFlavoredMarkdownConverter;
 use WeasyPrint\Facade as WeasyPrint;
 
+use AMoschou\CommonMark\Alert\AlertExtension;
+use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
+use League\CommonMark\Extension\GithubFlavoredMarkdownExtension;
+use League\CommonMark\MarkdownConverter;
+// use League\CommonMark\Parser\MarkdownParser;
+// use League\CommonMark\Renderer\HtmlRenderer;
+
 $middleware = match (config('grapho.starter_kit')) {
     'breeze' => ['auth'],
     'jetstream' => [
@@ -93,19 +101,28 @@ Route::middleware($middleware)->group(function () {
 
         // $htmlContent = (new GithubFlavoredMarkdownConverter())->convert($md);
 
-        $token = config('grapho.github_api_token');
+        $htmlContent = (
+            new MarkdownConverter(
+                (new Environment([]))
+                    ->addExtension(new CommonMarkCoreExtension())
+                    ->addExtension(new GithubFlavoredMarkdownExtension())
+                    ->addExtension(new AlertExtension())
+            )
+        )->convert($md);
 
-        $response = Http::accept('application/vnd.github+json')
-            ->withToken($token)
-            ->withHeaders([
-                'X-GitHub-Api-Version' => '2022-11-28',
-            ])->post('https://api.github.com/markdown', [
-                'text' => $md,
-                'mode' => 'gfm',
-            ]);
+        // $token = config('grapho.github_api_token');
+        // 
+        // $response = Http::accept('application/vnd.github+json')
+        //     ->withToken($token)
+        //     ->withHeaders([
+        //         'X-GitHub-Api-Version' => '2022-11-28',
+        //     ])->post('https://api.github.com/markdown', [
+        //         'text' => $md,
+        //         'mode' => 'gfm',
+        //     ]);
         // Todo: Somehow include cURL "-L" option here.
-        
-        $htmlContent = $response->body();
+        // 
+        // $htmlContent = $response->body();
 
         $editLink = 'https://github.com/' . config('grapho.github_repo') . "/edit/main/{$path}.md";
 
