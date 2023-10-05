@@ -10,7 +10,7 @@
         }
     ],
     "require": {
-        "amoschou/commonmark-alert-extension": "dev-main",
+        "amoschou/commonmark-alert-extension": "@dev",
         "rockett/weasyprint": "^7.0"
     },
     "autoload": {
