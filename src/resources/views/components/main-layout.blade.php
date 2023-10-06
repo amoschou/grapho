@@ -34,6 +34,16 @@
                 }
             }
 
+            .markdown-body div.md-alert {
+                margin-top: 0;
+                margin-bottom: 16px;
+                margin-left: 0;
+                margin-right: 0;
+                padding: 0 1em;
+                color: var(--color-fg-muted);
+                border-left: 0.25em solid var(--color-border-default);
+            }
+
             .markdown-body div.md-alert.md-alert-note { border-left-color: #0969DA; }
             .markdown-body div.md-alert.md-alert-important { border-left-color: #8250df; }
             .markdown-body div.md-alert.md-alert-warning { border-left-color: #9A6700; }
