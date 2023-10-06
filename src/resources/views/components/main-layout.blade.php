@@ -34,9 +34,9 @@
                 }
             }
 
-            .markdown-body blockquote.note { border-left-color: #0969DA; }
-            .markdown-body blockquote.important { border-left-color: #8250df; }
-            .markdown-body blockquote.warning { border-left-color: #9A6700; }
+            .markdown-body div.md-alert.md-alert-note { border-left-color: #0969DA; }
+            .markdown-body div.md-alert.md-alert-important { border-left-color: #8250df; }
+            .markdown-body div.md-alert.md-alert-warning { border-left-color: #9A6700; }
 
             .markdown-body .color-note { color: #0969DA; }
             .markdown-body .color-important { color: #8250df; }
