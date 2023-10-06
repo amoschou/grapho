@@ -44,7 +44,8 @@
                 border-left: 0.25em solid var(--color-border-default);
             }
 
-            .markdown-body div.md-alert.md-alert-note > span { font-weight: var(--base-text-weight-medium, 500) !important; }
+            .markdown-body div.md-alert > span { font-weight: 500; }
+            .markdown-body div.md-alert > span > svg { margin-right: 8px; }
 
             .markdown-body div.md-alert.md-alert-note { border-left-color: #0969DA; }
             .markdown-body div.md-alert.md-alert-important { border-left-color: #8250df; }
