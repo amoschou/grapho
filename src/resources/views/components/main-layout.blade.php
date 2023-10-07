@@ -64,6 +64,13 @@
             body {
                 font-family: 'IBM Plex Sans', sans-serif;
             }
+
+            @page {
+                size: A4;
+                margin: 5mm;
+            }
+
+
         </style>        
     </head>
     <body>
