@@ -64,7 +64,7 @@
             body {
                 font-family: 'IBM Plex Sans', sans-serif;
             }
-</style>        
+        </style>        
     </head>
     <body>
         <div>
