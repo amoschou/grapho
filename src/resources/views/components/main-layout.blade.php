@@ -38,6 +38,11 @@
                 }
             }
 
+            @page {
+                size: A4;
+                margin: 14mm;
+            }
+
             .markdown-body div.md-alert {
                 margin-top: 0;
                 margin-bottom: 16px;
@@ -63,11 +68,6 @@
 
             body {
                 font-family: 'IBM Plex Sans', sans-serif;
-            }
-
-            @page {
-                size: A4;
-                margin: 5mm;
             }
 
 
