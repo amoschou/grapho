@@ -124,8 +124,6 @@ Route::middleware($middleware)->group(function () {
         
         $htmlContent = $response->body();
 
-        
-
         $editLink = 'https://github.com/' . config('grapho.github_repo') . "/edit/main/{$path}.md";
 
         $updateTime = Carbon::createFromTimestamp((new DocFile($absolutePath))->getMTime())->setTimezone('Australia/Adelaide')->format('g:i A, j F Y');
