@@ -104,7 +104,7 @@
 
                     <form method="POST" action="{{ is_null($path) ? route('grapho.home.comment.create') : route('grapho.path.comment.create', ['path' => $path]) }}">
                         @csrf
-                        <textarea rows="6" cols="80" name="comment" style="display: block; width: 100%;"></textarea>
+                        <textarea rows="6" name="comment" style="display: block; width: (100% - 6px);"></textarea>
                         <button type="submit">Save</button>
                     </form>
 

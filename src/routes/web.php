@@ -21,15 +21,15 @@ use League\CommonMark\MarkdownConverter;
 // use League\CommonMark\Parser\MarkdownParser;
 // use League\CommonMark\Renderer\HtmlRenderer;
 
-$middleware = match (config('grapho.starter_kit')) {
-    'breeze' => ['auth'],
-    'jetstream' => [
-        'auth:sanctum',
-        config('jetstream.auth_session'),
-        'verified',
-    ],
-    default => [],
-};
+// $middleware = match (config('grapho.starter_kit')) {
+//     'breeze' => ['auth'],
+//     'jetstream' => [
+//         'auth:sanctum',
+//         config('jetstream.auth_session'),
+//         'verified',
+//     ],
+//     default => [],
+// };
 
 $middleware = config('grapho.middleware'); // Apply this explicitly. For future, apply middleware as above according to starter kit?
 
