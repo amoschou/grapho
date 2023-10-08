@@ -1,0 +1,29 @@
+name: "Update websites"
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+jobs:
+  update-the-md-source-files:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run composer update to pull the new version to the docs site
+        env: 
+          SSH_HOST: ${{ vars.SSH_HOST }}
+          SSH_USER: ${{ vars.SSH_USER }}
+          SSH_HOST_KEY: ${{ vars.SSH_HOST_KEY }}
+          NFSN_KEY: ${{ secrets.NFSN_KEY }}
+          REMOTE_PATH: ${{ vars.REMOTE_PATH }}
+        run: |
+          sleep 5
+          mkdir ~/.ssh
+          touch ~/.ssh/known_hosts
+          touch ~/.ssh/id_ed25519
+          chmod -R go-rwx ~/.ssh
+          echo ${SSH_HOST_KEY} > ~/.ssh/known_hosts
+          echo "${NFSN_KEY}" > ~/.ssh/id_ed25519
+          ssh ${SSH_USER}@${SSH_HOST} "cd ${REMOTE_PATH} && composer update"
+          rm -rf ~/.ssh
