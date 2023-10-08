@@ -16,7 +16,7 @@ jobs:
           SSH_USER: ${{ vars.SSH_USER }}
           SSH_HOST_KEY: ${{ vars.SSH_HOST_KEY }}
           NFSN_KEY: ${{ secrets.NFSN_KEY }}
-          REMOTE_PATH: ${{ vars.REMOTE_PATH }}
+          SITE_ROOT: ${{ vars.REMOTE_PATH }}
         run: |
           sleep 5
           mkdir ~/.ssh
@@ -25,5 +25,5 @@ jobs:
           chmod -R go-rwx ~/.ssh
           echo ${SSH_HOST_KEY} > ~/.ssh/known_hosts
           echo "${NFSN_KEY}" > ~/.ssh/id_ed25519
-          ssh ${SSH_USER}@${SSH_HOST} "cd ${REMOTE_PATH} && composer update"
+          ssh ${SSH_USER}@${SSH_HOST} "cd ${SITE_ROOT} && php artisan down --refresh=15 && composer update && php artisan up"
           rm -rf ~/.ssh
