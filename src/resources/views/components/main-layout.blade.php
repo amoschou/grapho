@@ -117,6 +117,7 @@
                 </div>
             </footer>
         </div>
+        {{--
         <script>
             document.querySelectorAll('blockquote > p:first-child').forEach((p) => {
                 bq = p.parentElement;
@@ -132,6 +133,7 @@
                 }
             });
         </script>
+        --}}
     </body>
 </html>
 
