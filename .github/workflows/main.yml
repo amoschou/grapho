@@ -25,5 +25,5 @@ jobs:
           chmod -R go-rwx ~/.ssh
           echo ${SSH_HOST_KEY} > ~/.ssh/known_hosts
           echo "${NFSN_KEY}" > ~/.ssh/id_ed25519
-          ssh ${SSH_USER}@${SSH_HOST} "cd ${SITE_ROOT}; php artisan down --render=\"errors::temp-down\" --refresh=15; composer update; php artisan up"
+          ssh ${SSH_USER}@${SSH_HOST} "cd ${SITE_ROOT}; php artisan down --render=errors::temp-down --refresh=15; composer update; php artisan up"
           rm -rf ~/.ssh
