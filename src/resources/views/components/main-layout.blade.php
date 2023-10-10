@@ -94,7 +94,7 @@
                 <hr>
             </nav>
         </header>
-        <section class="markdown-body">{{ $slot }}</section>
+        <main class="markdown-body">{{ $slot }}</main>
         <footer>
             <hr>
 
@@ -138,5 +138,3 @@
         --}}
     </body>
 </html>
-
-
