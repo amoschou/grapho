@@ -37,10 +37,14 @@ class ServiceProvider extends BaseServiceProvider
         $this->loadViewsFrom($this->path('resources/views'), 'grapho');
 
         $this->publishes([
-            $this->path('resources/views') => resource_path('views/vendor/grapho'),
+            $this->path('resources/views') => resource_path('views/vendor/amoschou/grapho'),
         ], 'grapho-views');
 
         $this->loadMigrationsFrom($this->path('database/migrations'));
+
+        $this->publishes([
+            $this->path('resources/css') => public_path('vendor/amoschou/grapho/resources/css'),
+        ], 'grapho-public');
     }
 
     private function path($path): string
