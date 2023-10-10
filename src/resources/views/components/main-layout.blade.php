@@ -25,6 +25,7 @@
 
         <link rel="stylesheet" href="/vendor/amoschou/grapho/resources/css/main.css" />
 
+        {{--
         <style>
             .markdown-body {
                 box-sizing: border-box;
@@ -38,11 +39,6 @@
                 .markdown-body {
                     padding: 15px;
                 }
-            }
-
-            @page {
-                size: A4;
-                margin: 14mm;
             }
 
             .markdown-body div.md-alert {
@@ -71,9 +67,14 @@
             body {
                 font-family: 'IBM Plex Sans', sans-serif;
             }
-
-
-        </style>        
+        </style>
+        --}}
+        <style>
+            @page {
+                size: A4;
+                margin: 14mm;
+            }
+        </style>
     </head>
     <body>
         <div>
