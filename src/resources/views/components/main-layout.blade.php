@@ -23,10 +23,6 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
 
-        {{--
-        <link rel="stylesheet" href="/vendor/amoschou/grapho/resources/css/main.css" />
-        --}}
-
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
 
         {{--
@@ -81,10 +77,9 @@
         </style>
     </head>
     <body>
-        <div>
-            <header>
-                <h2>{{ config('app.name', 'Laravel') }}</h2>
-            </header>
+        <header>
+            <h1>{{ config('app.name', 'Laravel') }}</h1>
+
             <nav>
                 <x-grapho::auth-links></x-grapho::auth-links>
                 <x-grapho::toc></x-grapho::toc>
@@ -98,32 +93,32 @@
                 </div>
                 <hr>
             </nav>
-            <section class="markdown-body">{{ $slot }}</section>
-            <footer>
-                <hr>
+        </header>
+        <section class="markdown-body">{{ $slot }}</section>
+        <footer>
+            <hr>
 
-                <p>
-                    @if ($updateTime) Last updated: {{ $updateTime }} @endif &emsp;<a href="{{ $editLink }}" target="_blank">Edit this page</a>
-                </p>
+            <p>
+                @if ($updateTime) Last updated: {{ $updateTime }} @endif &emsp;<a href="{{ $editLink }}" target="_blank">Edit this page</a>
+            </p>
 
-                <div>
-                    <h4>Comments</h4>
+            <div>
+                <h4>Comments</h4>
 
-                    <form method="POST" action="{{ is_null($path) ? route('grapho.home.comment.create') : route('grapho.path.comment.create', ['path' => $path]) }}">
-                        @csrf
-                        <textarea rows="6" name="comment" style="display: block; width: calc(100% - 6px);"></textarea>
-                        <button type="submit">Save</button>
-                    </form>
+                <form method="POST" action="{{ is_null($path) ? route('grapho.home.comment.create') : route('grapho.path.comment.create', ['path' => $path]) }}">
+                    @csrf
+                    <textarea rows="6" name="comment" style="display: block; width: calc(100% - 6px);"></textarea>
+                    <button type="submit">Save</button>
+                </form>
 
-                    @foreach ($comments as $comment)
-                        <div>
-                            <p><strong>{{ $comment->user->name }} ({{ $comment->created_at }}):</strong></p>
-                            <p>{{ $comment->comment }}</p>
-                        </div>
-                    @endforeach
-                </div>
-            </footer>
-        </div>
+                @foreach ($comments as $comment)
+                    <div>
+                        <p><strong>{{ $comment->user->name }} ({{ $comment->created_at }}):</strong></p>
+                        <p>{{ $comment->comment }}</p>
+                    </div>
+                @endforeach
+            </div>
+        </footer>
         {{--
         <script>
             document.querySelectorAll('blockquote > p:first-child').forEach((p) => {
