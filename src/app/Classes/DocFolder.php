@@ -143,7 +143,7 @@ class DocFolder extends SplFileInfo
                 $listItems[] = '<li>' . $child->getTitle() . '</li>';
             }
 
-            if ($child instanceof DocFolder::class) {
+            if ($child instanceof DocFolder) {
                 $listItems = array_merge($listItems, $child->listContents($maxDepth, $currentLevel, true));
             }
         }
