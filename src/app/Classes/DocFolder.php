@@ -133,9 +133,9 @@ class DocFolder extends SplFileInfo
         $listItems = [];
 
         if (is_null($maxDepth) || ($currentLevel <= $maxDepth)) {
-            foreach ($this->getChildren() as $child) {
-                $currentLevel++;
+            $currentLevel++;
 
+            foreach ($this->getChildren() as $child) {
                 if (is_null($maxDepth) || ($currentLevel <= $maxDepth)) {
                     $listItems[] = str_repeat(' ', 4 * $currentLevel) . '<li>' . $child->getTitle() . '</li>';
                 }
@@ -143,13 +143,13 @@ class DocFolder extends SplFileInfo
                 if ($child instanceof DocFolder) {
                     $listItems = array_merge($listItems, $child->listContents($currentLevel, $maxDepth, true, false));
                 }
-
-                $currentLevel--;
             }
+
+            $currentLevel--;
         }
 
         return count($listItems) === 0 ? [] : [
-            str_repeat(' ', 4 * $currentLevel) . '<ol class="level-' . ($currentLevel + 1) . '">',
+            str_repeat(' ', 4 * $currentLevel) . '<ol class="ol' . ($currentLevel + 1) . '">',
             ...$listItems,
             str_repeat(' ', 4 * $currentLevel) . '</ol>',
         ];
