@@ -132,35 +132,30 @@ class DocFolder extends SplFileInfo
     {
         $listItems = [];
 
-        $hasChildren = count($this->getChildren()) > 0;
+        if (is_null($maxDepth) || ($currentLevel <= $maxDepth)) {
+            $wrap = $wrap && (count($this->getChildren()) > 0);
 
-        if ($wrap && $hasChildren) {
-            $spaces = str_repeat(' ', 4 * $currentLevel);
-
-            $listItems[] = $spaces . '<ol>';
-        }
-
-        $currentLevel++;
-
-        foreach ($this->getChildren() as $child) {
-
-            if (is_null($maxDepth) || ($currentLevel <= $maxDepth)) {
-                $spaces = str_repeat(' ', 4 * $currentLevel);
-
-                $listItems[] = $spaces . '<li>' . $child->getTitle() . '</li>';
+            if ($wrap) {
+                $listItems[] = str_repeat(' ', 4 * $currentLevel) . '<ol>';
             }
 
-            if ($child instanceof DocFolder) {
-                $listItems = array_merge($listItems, $child->listContents($maxDepth, $currentLevel, true, false));
+            $currentLevel++;
+
+            foreach ($this->getChildren() as $child) {
+                if (is_null($maxDepth) || ($currentLevel <= $maxDepth)) {
+                    $listItems[] = str_repeat(' ', 4 * $currentLevel) . '<li>' . $child->getTitle() . '</li>';
+                }
+
+                if ($child instanceof DocFolder) {
+                    $listItems = array_merge($listItems, $child->listContents($maxDepth, $currentLevel, true, false));
+                }
             }
-        }
 
-        $currentLevel--;
+            $currentLevel--;
 
-        if ($wrap && $hasChildren) {
-            $spaces = str_repeat(' ', 4 * $currentLevel);
-
-            $listItems[] = $spaces . '</ol>';
+            if ($wrap) {
+                $listItems[] = str_repeat(' ', 4 * $currentLevel) . '</ol>';
+            }
         }
 
         return $returnString ? implode("\n", $listItems) : $listItems;
