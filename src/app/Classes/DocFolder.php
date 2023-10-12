@@ -132,7 +132,9 @@ class DocFolder extends SplFileInfo
     {
         $listItems = [];
 
-        if ($wrap) {
+        $hasChildren = count($this->getChildren()) > 0;
+
+        if ($wrap && $hasChildren) {
             $spaces = str_repeat(' ', 4 * $currentLevel);
 
             $listItems[] = $spaces . '<ol>';
@@ -155,7 +157,7 @@ class DocFolder extends SplFileInfo
 
         $currentLevel--;
 
-        if ($wrap) {
+        if ($wrap && $hasChildren) {
             $spaces = str_repeat(' ', 4 * $currentLevel);
 
             $listItems[] = $spaces . '</ol>';
