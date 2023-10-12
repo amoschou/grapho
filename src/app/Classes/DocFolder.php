@@ -128,40 +128,37 @@ class DocFolder extends SplFileInfo
         return $tree;
     }
 
-    public function listContents($maxDepth = null, $currentLevel = 0, $wrap = true, $returnString = false)
+    public function listContents($maxDepth = null, $currentLevel = 0, $wrap = true, $returnAsString = false)
     {
         $listItems = [];
 
         if (is_null($maxDepth) || ($currentLevel <= $maxDepth)) {
-            $wrap = $wrap
-                && (count($this->getChildren()) > 0)
-                && (! is_null($maxDepth))
-                && ($currentLevel + 1 <= $maxDepth);
-
-            if ($wrap) {
-                $listItems[] = str_repeat(' ', 4 * $currentLevel) . '<ol>';
-            }
-
-            $currentLevel++;
+            $children = [];
 
             foreach ($this->getChildren() as $child) {
+                $currentLevel++;
+
                 if (is_null($maxDepth) || ($currentLevel <= $maxDepth)) {
-                    $listItems[] = str_repeat(' ', 4 * $currentLevel) . '<li>' . $child->getTitle() . '</li>';
+                    $children[] = str_repeat(' ', 4 * $currentLevel) . '<li>' . $child->getTitle() . '</li>';
                 }
 
                 if ($child instanceof DocFolder) {
-                    $listItems = array_merge($listItems, $child->listContents($maxDepth, $currentLevel, true, false));
+                    $children = array_merge($children, $child->listContents($maxDepth, $currentLevel, true, false));
                 }
+
+                $currentLevel--;
             }
 
-            $currentLevel--;
-
-            if ($wrap) {
-                $listItems[] = str_repeat(' ', 4 * $currentLevel) . '</ol>';
+            if (count($children) > 0) {
+                $listItems = [
+                    '<ol>',
+                    ...$children,
+                    '</ol>',
+                ];
             }
         }
 
-        return $returnString ? implode("\n", $listItems) : $listItems;
+        return $returnAsString ? implode("\n", $listItems) : $listItems;
     }
 
     // public function objectTree()
