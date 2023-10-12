@@ -138,8 +138,9 @@ class DocFolder extends SplFileInfo
             $listItems[] = $spaces . '<ol>';
         }
 
+        $currentLevel++;
+
         foreach ($this->getChildren() as $child) {
-            $currentLevel++;
 
             if (is_null($maxDepth) || ($currentLevel <= $maxDepth)) {
                 $spaces = str_repeat(' ', 4 * $currentLevel);
@@ -151,6 +152,8 @@ class DocFolder extends SplFileInfo
                 $listItems = array_merge($listItems, $child->listContents($maxDepth, $currentLevel, true, false));
             }
         }
+
+        $currentLevel--;
 
         if ($wrap) {
             $spaces = str_repeat(' ', 4 * $currentLevel);
