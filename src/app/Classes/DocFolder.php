@@ -128,7 +128,7 @@ class DocFolder extends SplFileInfo
         return $tree;
     }
 
-    public function listContents($currentLevel = 0, $maxDepth = null, $wrap = true, $returnAsString = false)
+    public function listContents($currentLevel = 0, $maxDepth = null)
     {
         $listItems = [];
 
@@ -158,7 +158,7 @@ class DocFolder extends SplFileInfo
             }
         }
 
-        return $returnAsString ? implode("\n", $listItems) : $listItems;
+        return $listItems;
     }
 
     // public function objectTree()
