@@ -128,7 +128,7 @@ class DocFolder extends SplFileInfo
         return $tree;
     }
 
-    public function listContents($maxDepth = null, $currentLevel = 0, $wrap = true, $returnAsString = false)
+    public function listContents($currentLevel = 0, $maxDepth = null, $wrap = true, $returnAsString = false)
     {
         $listItems = [];
 
@@ -143,7 +143,7 @@ class DocFolder extends SplFileInfo
                 }
 
                 if ($child instanceof DocFolder) {
-                    $children = array_merge($children, $child->listContents($maxDepth, $currentLevel, true, false));
+                    $children = array_merge($children, $child->listContents($currentLevel, $maxDepth, true, false));
                 }
 
                 $currentLevel--;
