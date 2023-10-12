@@ -151,7 +151,7 @@ class DocFolder extends SplFileInfo
 
             if (count($children) > 0) {
                 $listItems = [
-                    str_repeat(' ', 4 * $currentLevel) . '<ol class="level-' . $currentLevel . '">',
+                    str_repeat(' ', 4 * $currentLevel) . '<ol class="level-' . ($currentLevel + 1) . '">',
                     ...$children,
                     str_repeat(' ', 4 * $currentLevel) . '</ol>',
                 ];
