@@ -128,31 +128,37 @@ class DocFolder extends SplFileInfo
         return $tree;
     }
 
-    public function listContents($maxDepth = null, $currentLevel = 0, $wrap = true)
+    public function listContents($maxDepth = null, $currentLevel = 0, $wrap = true, $returnString = false)
     {
         $listItems = [];
 
         if ($wrap) {
-            $listItems[] = '<ol>';
+            $spaces = str_repeat(' ', 4 * $currentLevel);
+
+            $listItems[] = $spaces . '<ol>';
         }
 
         foreach ($this->getChildren() as $child) {
             $currentLevel++;
 
             if (is_null($maxDepth) || ($currentLevel <= $maxDepth)) {
-                $listItems[] = '<li>' . $child->getTitle() . '</li>';
+                $spaces = str_repeat(' ', 4 * $currentLevel);
+
+                $listItems[] = $spaces . '<li>' . $child->getTitle() . '</li>';
             }
 
             if ($child instanceof DocFolder) {
-                $listItems = array_merge($listItems, $child->listContents($maxDepth, $currentLevel, true));
+                $listItems = array_merge($listItems, $child->listContents($maxDepth, $currentLevel, true, false));
             }
         }
 
         if ($wrap) {
-            $listItems[] = '</ol>';
+            $spaces = str_repeat(' ', 4 * $currentLevel);
+
+            $listItems[] = $spaces . '</ol>';
         }
 
-        return implode("\n", $listItems);
+        return $returnString ? implode("\n", $listItems) : $listItems;
     }
 
     // public function objectTree()
