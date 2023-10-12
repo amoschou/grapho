@@ -139,7 +139,7 @@ class DocFolder extends SplFileInfo
 
             foreach ($this->getChildren() as $child) {
                 if (is_null($maxDepth) || ($currentLevel <= $maxDepth)) {
-                    $listItems[] = $spaces . '    <li>' . $child->getTitle() . '</li>';
+                    $listItems[] = '    ' . $spaces . '<li>' . $child->getTitle() . '</li>';
                 }
 
                 if ($child instanceof DocFolder) {
