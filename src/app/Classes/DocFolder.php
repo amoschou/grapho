@@ -133,7 +133,10 @@ class DocFolder extends SplFileInfo
         $listItems = [];
 
         if (is_null($maxDepth) || ($currentLevel <= $maxDepth)) {
-            $wrap = $wrap && (count($this->getChildren()) > 0);
+            $wrap = $wrap
+                && (count($this->getChildren()) > 0)
+                && (! is_null($maxDepth))
+                && ($currentLevel + 1 <= $maxDepth);
 
             if ($wrap) {
                 $listItems[] = str_repeat(' ', 4 * $currentLevel) . '<ol>';
