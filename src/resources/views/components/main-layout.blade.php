@@ -85,18 +85,18 @@
                             <a href="{{ route('grapho.path', ['path' => $path, 'pdf' => 'inline']) }}">Download PDF</a>
                         @endif
                     </div>
+                    <hr>
                 @endif
-                <hr>
             </nav>
+            <p>
+                @if ($updateTime) Last updated: {{ $updateTime }} @endif
+                @if ($online && $updateTime) <br> @endif
+                @if ($online) <a href="{{ $editLink }}" target="_blank">Edit this page</a> @endif
+            </p>
         </header>
         <main class="markdown-body">{{ $slot }}</main>
         <footer>
             <hr>
-
-            <p>
-                @if ($updateTime) Last updated: {{ $updateTime }} @endif
-                @if ($online)&emsp;<a href="{{ $editLink }}" target="_blank">Edit this page</a> @endif
-            </p>
 
             <div>
                 <h4>Comments</h4>
