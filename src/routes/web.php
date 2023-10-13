@@ -3,11 +3,10 @@
 use AMoschou\Grapho\App\Classes\DocFile;
 use AMoschou\Grapho\App\Classes\DocFolder;
 use AMoschou\Grapho\App\Http\Controllers\GraphoController;
+use AMoschou\Grapho\App\Http\Controllers\CommentController;
 use AMoschou\Grapho\App\Models\GraphoComment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use League\CommonMark\Extension\FrontMatter\FrontMatterExtension;
 use League\CommonMark\GithubFlavoredMarkdownConverter;
@@ -39,7 +38,10 @@ Route::middleware($middleware)->group(function () {
 
         $comments = GraphoComment::where('path', '')->orderBy('created_at')->get();
 
+        $pdf = array_key_exists('pdf', request()->query());
+
         $renderable = view('grapho::page', [
+            'online' => ! $pdf,
             'htmlContent' => '',
             'tocNode' => $tocNode,
             'editLink' => '#',
@@ -48,8 +50,6 @@ Route::middleware($middleware)->group(function () {
             'comments' => $comments,
             'path' => null,
         ]);
-
-        $pdf = array_key_exists('pdf', request()->query());
 
         if ($pdf) {
             $method = request()->query('pdf', 'inline');
@@ -99,8 +99,12 @@ Route::middleware($middleware)->group(function () {
 
         $md = $result->getContent();
 
-        $htmlContent = (new GithubFlavoredMarkdownConverter())->convert($md);
+        // THERE ARE THREE OPTIONS TO CONVERT MD TO HTML
 
+        // OPTION 1
+        // $htmlContent = (new GithubFlavoredMarkdownConverter())->convert($md);
+
+        // OPTION 2
         // $htmlContent = (
         //     new MarkdownConverter(
         //         (new Environment([]))
@@ -110,29 +114,25 @@ Route::middleware($middleware)->group(function () {
         //     )
         // )->convert($md);
 
-        $token = config('grapho.github_api_token');
+        // OPTION 3 // Todo: Somehow include cURL "-L" option here.
+        $htmlContent = Http::accept('application/vnd.github+json')
+            ->withToken(config('grapho.github_api_token'))
+            ->withHeaders(['X-GitHub-Api-Version' => '2022-11-28'])
+            ->post('https://api.github.com/markdown', ['text' => $md, 'mode' => 'gfm'])
+            ->body();
         
-        $response = Http::accept('application/vnd.github+json')
-            ->withToken($token)
-            ->withHeaders([
-                'X-GitHub-Api-Version' => '2022-11-28',
-            ])->post('https://api.github.com/markdown', [
-                'text' => $md,
-                'mode' => 'gfm',
-            ]);
-        // Todo: Somehow include cURL "-L" option here.
-        
-        $htmlContent = $response->body();
-
         $editLink = 'https://github.com/' . config('grapho.github_repo') . "/edit/main/{$path}.md";
 
         $updateTime = Carbon::createFromTimestamp((new DocFile($absolutePath))->getMTime())->setTimezone('Australia/Adelaide')->format('g:i A, j F Y');
 
-        $tocNode = GraphoController::tableOfContents();
+        // $tocNode = GraphoController::tableOfContents();
 
         $comments = GraphoComment::where('path', $path)->orderBy('created_at')->get();
 
+        $pdf = array_key_exists('pdf', request()->query());
+
         $renderable = view('grapho::page', [
+            'online' => ! $pdf,
             'htmlContent' => $htmlContent,
             'editLink' => $editLink,
             'breadcrumbs' => $breadcrumbs,
@@ -140,8 +140,6 @@ Route::middleware($middleware)->group(function () {
             'comments' => $comments,
             'path' => $path,
         ]);
-
-        $pdf = array_key_exists('pdf', request()->query());
 
         if ($pdf) {
             $method = request()->query('pdf', 'inline');
@@ -159,35 +157,7 @@ Route::middleware($middleware)->group(function () {
         return $renderable;
     })->where('path', '.+')->name('path');
 
-    Route::post('/', function (Request $request) {
-        $validatedData = $request->validate([
-            'comment' => ['required'],
-        ]);
+    Route::post('/', [CommentController::class, 'postHome'])->name('home.comment.create');
 
-        DB::table('grapho_comments')->insert([
-            'user_id' => Auth::id(),
-            'path' => '',
-            'comment' => $validatedData['comment'],
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
-
-        return redirect()->route('grapho.home');
-    })->name('home.comment.create');
-
-    Route::post('/{path}', function ($path, Request $request) {
-        $validatedData = $request->validate([
-            'comment' => ['required'],
-        ]);
-
-        DB::table('grapho_comments')->insert([
-            'user_id' => Auth::id(),
-            'path' => $path,
-            'comment' => $validatedData['comment'],
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
-
-        return redirect()->route('grapho.path', ['path' => $path]);
-    })->where('path', '.+')->name('path.comment.create');
+    Route::post('/{path}', [CommentController::class, 'postPath'])->where('path', '.+')->name('path.comment.create');
 });

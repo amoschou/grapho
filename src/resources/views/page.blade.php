@@ -4,4 +4,5 @@
     :updateTime="$updateTime"
     :path="$path"
     :comments="$comments"
+    :online="$online"
 >{!! $htmlContent !!}</x-grapho::main-layout>

@@ -73,16 +73,18 @@
             <h1>{{ config('app.name', 'Laravel') }}</h1>
 
             <nav>
-                <x-grapho::auth-links></x-grapho::auth-links>
-                <x-grapho::toc></x-grapho::toc>
+                @if ($online) <x-grapho::auth-links></x-grapho::auth-links> @endif
+                @if ($online) <x-grapho::toc></x-grapho::toc> @endif
                 <x-grapho::breadcrumbs :breadcrumbs="$breadcrumbs"></x-grahpo::breadcrumbs>
-                <div>
-                    @if (is_null($path))
-                        <a href="{{ route('grapho.home', ['pdf' => 'inline']) }}">Download PDF</a>
-                    @else
-                        <a href="{{ route('grapho.path', ['path' => $path, 'pdf' => 'inline']) }}">Download PDF</a>
+                @if ($online)
+                    <div>
+                        @if (is_null($path))
+                            <a href="{{ route('grapho.home', ['pdf' => 'inline']) }}">Download PDF</a>
+                        @else
+                            <a href="{{ route('grapho.path', ['path' => $path, 'pdf' => 'inline']) }}">Download PDF</a>
+                        @endif
+                    </div>
                     @endif
-                </div>
                 <hr>
             </nav>
         </header>
@@ -91,17 +93,19 @@
             <hr>
 
             <p>
-                @if ($updateTime) Last updated: {{ $updateTime }} @endif &emsp;<a href="{{ $editLink }}" target="_blank">Edit this page</a>
+                @if ($updateTime) Last updated: {{ $updateTime }} @endif@if ($online)&emsp;<a href="{{ $editLink }}" target="_blank">Edit this page</a> @endif
             </p>
 
             <div>
                 <h4>Comments</h4>
 
-                <form method="POST" action="{{ is_null($path) ? route('grapho.home.comment.create') : route('grapho.path.comment.create', ['path' => $path]) }}">
-                    @csrf
-                    <textarea rows="6" name="comment" style="display: block; width: calc(100% - 6px);"></textarea>
-                    <button type="submit">Save</button>
-                </form>
+                @if ($online)
+                    <form method="POST" action="{{ is_null($path) ? route('grapho.home.comment.create') : route('grapho.path.comment.create', ['path' => $path]) }}">
+                        @csrf
+                        <textarea rows="6" name="comment" style="display: block; width: calc(100% - 6px);"></textarea>
+                        <button type="submit">Save</button>
+                    </form>
+                @endif
 
                 @foreach ($comments as $comment)
                     <div>
