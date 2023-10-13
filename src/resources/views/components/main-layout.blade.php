@@ -20,7 +20,7 @@
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
 
         <style>
             .markdown-body {
@@ -29,6 +29,14 @@
                 max-width: 980px;
                 margin: 0 auto;
                 padding: 45px;
+            }
+
+            body, .markdown-body {
+                font-family: 'IBM Plex Sans', sans-serif;
+            }
+
+            .markdown-body samp, .markdown-body pre, .markdown-body .footnotes .data-footnote-backref g-emoji {
+                font-family: 'IBM Plex Mono', sans-serif;
             }
 
             @media (max-width: 767px) {
@@ -57,10 +65,6 @@
             .markdown-body .color-note { color: #0969DA; }
             .markdown-body .color-important { color: #8250df; }
             .markdown-body .color-warning { color: #9A6700; }
-
-            body {
-                font-family: 'IBM Plex Sans', sans-serif;
-            }
         </style>
         <style>
             @page {
