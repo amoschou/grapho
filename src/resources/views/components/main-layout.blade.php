@@ -82,7 +82,7 @@
                         @if (is_null($path))
                             <a href="{{ route('grapho.home', ['pdf' => 'inline']) }}">Download PDF</a>
                         @else
-                            <a href="{{ route('grapho.path', ['path' => $path, 'pdf' => 'inline']) }}">Download PDF</a>
+                            <a href="{{ route('grapho.path', ['path' => $path]) }}.pdf">Download PDF</a>
                         @endif
                     </div>
                     <hr>
