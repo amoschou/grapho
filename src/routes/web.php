@@ -8,6 +8,7 @@ use AMoschou\Grapho\App\Models\GraphoComment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
 use League\CommonMark\Extension\FrontMatter\FrontMatterExtension;
 use League\CommonMark\GithubFlavoredMarkdownConverter;
 use WeasyPrint\Facade as WeasyPrint;
@@ -68,6 +69,14 @@ Route::middleware($middleware)->group(function () {
     })->name('home');
 
     Route::get('/{path}', function (string $path) {
+        if (Str::endsWith($path, '.pdf')) {
+            $pdf = true;
+
+            $path = Str::replaceLast('.pdf', '', $path)
+        } else {
+            $pdf = false;
+        }
+
         $absolutePath = config('grapho.source_path') . '/' . $path;
 
         if (is_dir($absolutePath)) {
@@ -129,8 +138,6 @@ Route::middleware($middleware)->group(function () {
 
         $comments = GraphoComment::where('path', $path)->orderBy('created_at')->get();
 
-        $pdf = array_key_exists('pdf', request()->query());
-
         $renderable = view('grapho::page', [
             'online' => ! $pdf,
             'htmlContent' => $htmlContent,
@@ -142,16 +149,11 @@ Route::middleware($middleware)->group(function () {
         ]);
 
         if ($pdf) {
-            $method = request()->query('pdf', 'inline');
-
             $output = WeasyPrint::prepareSource($renderable)->build();
 
             $pdfFilename = $pathArray[count($pathArray) - 1] . '.pdf';
 
-            return match ($method) {
-                'download' => $output->download($pdfFilename),
-                default => $output->inline($pdfFilename),
-            };
+            return $output->inline($pdfFilename);
         }
 
         return $renderable;
