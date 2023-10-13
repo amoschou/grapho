@@ -4,6 +4,7 @@
     'updateTime',
     'path',
     'comments',
+    'online',
 ])
 
 <!DOCTYPE html>
