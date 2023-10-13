@@ -72,7 +72,7 @@ Route::middleware($middleware)->group(function () {
         if (Str::endsWith($path, '.pdf')) {
             $pdf = true;
 
-            $path = Str::replaceLast('.pdf', '', $path)
+            $path = Str::replaceLast('.pdf', '', $path);
         } else {
             $pdf = false;
         }
