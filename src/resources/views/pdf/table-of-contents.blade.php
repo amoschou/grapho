@@ -4,7 +4,7 @@
     $updateTime = false;
     $path = null;
     $comments = [];
-    $onlin = false;
+    $online = false;
 ?>
 
 <x-grapho::main-layout
