@@ -80,7 +80,7 @@
             <nav>
                 @if ($online) <x-grapho::auth-links></x-grapho::auth-links> @endif
                 @if ($online) <x-grapho::toc></x-grapho::toc> @endif
-                <x-grapho::breadcrumbs :breadcrumbs="$breadcrumbs"></x-grahpo::breadcrumbs>
+                @if ($breadcrumbs) <x-grapho::breadcrumbs :breadcrumbs="$breadcrumbs"></x-grahpo::breadcrumbs> @endif
                 @if ($online)
                     <div>
                         @if (is_null($path))
@@ -95,7 +95,7 @@
             <p>
                 @if ($updateTime) Last updated: {{ $updateTime }} @endif
                 @if ($online && $updateTime) <br> @endif
-                @if ($online) <a href="{{ $editLink }}" target="_blank">Edit this page</a> @endif
+                @if ($editLink && $online) <a href="{{ $editLink }}" target="_blank">Edit this page</a> @endif
             </p>
         </header>
         <main class="markdown-body">{{ $slot }}</main>

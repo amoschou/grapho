@@ -4,6 +4,7 @@ use AMoschou\Grapho\App\Classes\DocFile;
 use AMoschou\Grapho\App\Classes\DocFolder;
 use AMoschou\Grapho\App\Http\Controllers\GraphoController;
 use AMoschou\Grapho\App\Http\Controllers\CommentController;
+use AMoschou\Grapho\App\Http\Controllers\PdfController;
 use AMoschou\Grapho\App\Models\GraphoComment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -34,6 +35,8 @@ use League\CommonMark\MarkdownConverter;
 $middleware = config('grapho.middleware'); // Apply this explicitly. For future, apply middleware as above according to starter kit?
 
 Route::middleware($middleware)->group(function () {
+    Route::get('/pdf/section/{section}', [PdfController::class, 'section']);
+
     Route::get('/', function () {
         $tocNode = GraphoController::tableOfContents();
 
@@ -69,12 +72,10 @@ Route::middleware($middleware)->group(function () {
     })->name('home');
 
     Route::get('/{path}', function (string $path) {
-        if (Str::endsWith($path, '.pdf')) {
-            $pdf = true;
+        $pdf = Str::endsWith($path, '.pdf');
 
+        if ($pdf) {
             $path = Str::replaceLast('.pdf', '', $path);
-        } else {
-            $pdf = false;
         }
 
         $absolutePath = config('grapho.source_path') . '/' . $path;
@@ -110,26 +111,32 @@ Route::middleware($middleware)->group(function () {
 
         // THERE ARE THREE OPTIONS TO CONVERT MD TO HTML
 
-        // OPTION 1
-        // $htmlContent = (new GithubFlavoredMarkdownConverter())->convert($md);
+        $option = 1;
 
-        // OPTION 2
-        // $htmlContent = (
-        //     new MarkdownConverter(
-        //         (new Environment([]))
-        //             ->addExtension(new CommonMarkCoreExtension())
-        //             ->addExtension(new GithubFlavoredMarkdownExtension())
-        //             ->addExtension(new AlertExtension())
-        //     )
-        // )->convert($md);
+        if ($option === 1) {
+            $htmlContent = (new GithubFlavoredMarkdownConverter())->convert($md);
+        }
 
-        // OPTION 3 // Todo: Somehow include cURL "-L" option here.
-        $htmlContent = Http::accept('application/vnd.github+json')
+        if ($option === 2) {
+            $htmlContent = (
+                new MarkdownConverter(
+                    (new Environment([]))
+                        ->addExtension(new CommonMarkCoreExtension())
+                        ->addExtension(new GithubFlavoredMarkdownExtension())
+                        ->addExtension(new AlertExtension())
+                )
+            )->convert($md);
+        }
+
+        if ($option === 3) {
+            // Todo: Somehow include cURL "-L" option here.
+            $htmlContent = Http::accept('application/vnd.github+json')
             ->withToken(config('grapho.github_api_token'))
             ->withHeaders(['X-GitHub-Api-Version' => '2022-11-28'])
             ->post('https://api.github.com/markdown', ['text' => $md, 'mode' => 'gfm'])
             ->body();
-        
+        }
+
         $editLink = 'https://github.com/' . config('grapho.github_repo') . "/edit/main/{$path}.md";
 
         $updateTime = Carbon::createFromTimestamp((new DocFile($absolutePath))->getMTime())->setTimezone('Australia/Adelaide')->format('g:i A, j F Y');

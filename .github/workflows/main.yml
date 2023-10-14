@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Run composer update to pull the new version to the docs site
-        env: 
+        env:
           SSH_HOST: ${{ vars.SSH_HOST }}
           SSH_USER: ${{ vars.SSH_USER }}
           SSH_HOST_KEY: ${{ vars.SSH_HOST_KEY }}
