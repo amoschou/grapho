@@ -22,7 +22,7 @@ class CommentController
         ]);
 
         return redirect()->route('grapho.home');
-    };
+    }
 
     public function postPath($path, Request $request)
     {
