@@ -79,7 +79,7 @@ class DocFolder extends SplFileInfo
             'root' => $this->getRealPath(),
         ]);
 
-        $ignore = ['.git', '.github', '_index.yaml'];
+        $ignore = ['.git', '.github', '_index.yaml', 'README.md'];
 
         $folderList = array_filter($disk->directories(), function ($el) use ($ignore) {
             return ! in_array($el, $ignore);
@@ -130,6 +130,8 @@ class DocFolder extends SplFileInfo
 
     public function listContents($maxDepth = null, $currentLevel = 0, $indent = '')
     {
+        $bigIndent = "{$indent}    ";
+
         $listItems = [];
 
         if (is_null($maxDepth) || ($currentLevel <= $maxDepth)) {
@@ -137,11 +139,11 @@ class DocFolder extends SplFileInfo
 
             foreach ($this->getChildren() as $child) {
                 if (is_null($maxDepth) || ($currentLevel <= $maxDepth)) {
-                    $listItems[] = "{$indent}    <li>" . $child->getTitle() . '</li>';
+                    $listItems[] = "{$bigIndent}<li>" . $child->getTitle() . '</li>';
                 }
 
                 if ($child instanceof DocFolder) {
-                    $listItems = array_merge($listItems, $child->listContents($maxDepth, $currentLevel, "{$indent}    "));
+                    $listItems = array_merge($listItems, $child->listContents($maxDepth, $currentLevel, $bigIndent));
                 }
             }
 
