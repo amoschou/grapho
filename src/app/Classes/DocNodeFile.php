@@ -59,7 +59,7 @@ class DocNodeFile
 
     private function pdfFileIsStale()
     {
-        if (! $docNodeFile->getPdfFile()->isFile()) {
+        if (! $this->getPdfFile()->isFile()) {
             return true;
         }
 
