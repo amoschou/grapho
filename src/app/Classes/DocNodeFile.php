@@ -258,6 +258,6 @@ class DocNodeFile
 
     public function openPdf()
     {
-        return $this->getPdfStorage()::download($this->relativePathWithNoSuffix);
+        return $this->getPdfStorage()->download($this->relativePathWithNoSuffix);
     }
 }
