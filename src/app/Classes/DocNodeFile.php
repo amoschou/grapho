@@ -17,7 +17,6 @@ use League\CommonMark\MarkdownConverter;
 use Illuminate\Support\Carbon;
 use WeasyPrint\Facade as WeasyPrint;
 
-
 class DocNodeFile
 {
     private string $relativePathWithNoSuffix;
