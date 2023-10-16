@@ -4,7 +4,7 @@ namespace AMoschou\Grapho\App\Http\Controllers;
 
 use mikehaertl\pdftk\Pdf;
 use Spatie\TemporaryDirectory\TemporaryDirectory;
-
+use WeasyPrint\Facade as WeasyPrint;
 
 class PdfController
 {

@@ -10,6 +10,7 @@ use AMoschou\Grapho\App\Models\GraphoComment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
+use WeasyPrint\Facade as WeasyPrint;
 
 // $middleware = match (config('grapho.starter_kit')) {
 //     'breeze' => ['auth'],
