@@ -2,8 +2,35 @@
 
 namespace AMoschou\Grapho\App\Http\Controllers;
 
+use mikehaertl\pdftk\Pdf;
+use Spatie\TemporaryDirectory\TemporaryDirectory;
+
+
 class PdfController
 {
+    public function pdf()
+    {
+        $tmpDir = TemporaryDirectory::make();
+
+        $pdfFrontCover = WeasyPrint::prepareSource(view('grapho::pdf.front-cover'))->build();
+        $pdfTableOfContents = WeasyPrint::prepareSource(view('grapho::pdf.table-of-contents'))->build();
+
+        $files = [
+            $tmpDir->path('front-cover.pdf') => $pdfFrontCover->getData(),
+            $tmpDir->path('table-of-contents.pdf') => $pdfTableOfContents->getData(),
+        ];
+
+        foreach ($files as $file => $data) {
+            file_put_contents($file, $data);
+        }
+
+        $pdf = new Pdf(array_keys($files))->cat()->saveAs($tmpDir('out.pdf'));
+
+        $pdf->send('out.pdf', true);
+
+        $tmpDir->delete();
+    }
+
     public function section($section)
     {
         if ($section === 'front-cover') {

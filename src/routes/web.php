@@ -24,6 +24,8 @@ use Illuminate\Support\Str;
 $middleware = config('grapho.middleware'); // Apply this explicitly. For future, apply middleware as above according to starter kit?
 
 Route::middleware($middleware)->group(function () {
+    Route::get('/pdf', [PdfController::class, 'pdf']);
+
     Route::get('/pdf/section/{section}', [PdfController::class, 'section']);
 
     Route::get('/', function () {
@@ -68,20 +70,18 @@ Route::middleware($middleware)->group(function () {
         $docNodeFile = new DocNodeFile($relativePathWithNoSuffix);
 
         if (is_dir($docNodeFile->getAbsolutePathWithNoSuffix())) {
+            if ($pdf) {
+                // CREATE PDF HERE.
+            }
+
             return redirect()->route('grapho.home');
         }
 
-        if (! is_file($docNodeFile->getAbsolutePathWithDotMd())) {
-            abort(404);
-        }
+        abort_if(! is_file($docNodeFile->getAbsolutePathWithDotMd()), 404);
 
-        if ($pdf) {
-            $docNodeFile->refreshPdfFile();
-
-            return $docNodeFile->openPdf();
-        }
-
-        return $docNodeFile->getRenderable();
+        return $pdf
+            ? $docNodeFile->openPdf()
+            : $docNodeFile->getRenderable();
     })->where('path', '.+')->name('path');
 
     Route::post('/', [CommentController::class, 'postHome'])->name('home.comment.create');

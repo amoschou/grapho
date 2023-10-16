@@ -11,7 +11,9 @@
     ],
     "require": {
         "amoschou/commonmark-alert-extension": "@dev",
-        "rockett/weasyprint": "^7.0"
+        "mikehaertl/php-pdftk": "^0.13.0",
+        "rockett/weasyprint": "^7.0",
+        "spatie/temporary-directory": "^2.2"
     },
     "autoload": {
         "psr-4": {
