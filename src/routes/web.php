@@ -2,25 +2,15 @@
 
 use AMoschou\Grapho\App\Classes\DocFile;
 use AMoschou\Grapho\App\Classes\DocFolder;
+use AMoschou\Grapho\App\Classes\DocNodeFile;
 use AMoschou\Grapho\App\Http\Controllers\GraphoController;
 use AMoschou\Grapho\App\Http\Controllers\CommentController;
 use AMoschou\Grapho\App\Http\Controllers\PdfController;
 use AMoschou\Grapho\App\Models\GraphoComment;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
-use League\CommonMark\Extension\FrontMatter\FrontMatterExtension;
-use League\CommonMark\GithubFlavoredMarkdownConverter;
 use WeasyPrint\Facade as WeasyPrint;
-
-use AMoschou\CommonMark\Alert\AlertExtension;
-use League\CommonMark\Environment\Environment;
-use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
-use League\CommonMark\Extension\GithubFlavoredMarkdownExtension;
-use League\CommonMark\MarkdownConverter;
-// use League\CommonMark\Parser\MarkdownParser;
-// use League\CommonMark\Renderer\HtmlRenderer;
 
 // $middleware = match (config('grapho.starter_kit')) {
 //     'breeze' => ['auth'],
@@ -74,98 +64,25 @@ Route::middleware($middleware)->group(function () {
     Route::get('/{path}', function (string $path) {
         $pdf = Str::endsWith($path, '.pdf');
 
-        if ($pdf) {
-            $pdfAbsolutePath = config('pdf_path') . '/' . $path;
+        $relativePathWithNoSuffix = $pdf ? Str::replaceLast('.pdf', '', $path) : $path;
 
-            $path = Str::replaceLast('.pdf', '', $path);
-        }
+        $docNodeFile = new DocNodeFile($relativePathWithNoSuffix);
 
-        $absolutePath = config('grapho.source_path') . '/' . $path;
-
-        if (is_dir($absolutePath)) {
+        if (is_dir($docNodeFile->absolutePathWithNoSuffix)) {
             return redirect()->route('grapho.home');
         }
 
-        $absolutePath .= '.md';
-
-        if (! is_file($absolutePath)) {
+        if (! is_file($docNodeFile->absoltuePathWithMdSuffix)) {
             abort(404);
         }
 
-        $pathArray = explode('/', $path);
-
-        $breadcrumbs = [];
-
-        for ($i = 1; $i < count($pathArray); $i++) {
-            $partialPath = implode('/', array_slice($pathArray, 0, $i));
-
-            $filename =  config('grapho.source_path') . '/' . $partialPath;
-
-            $breadcrumbs[] = [
-                'partial-path' => $partialPath,
-                'title' => is_file("{$filename}.md") ? (new DocFile("{$filename}.md"))->getTitle() : (new DocFolder($filename))->getTitle()
-            ];
-        }
-
-        $result = (new FrontMatterExtension())->getFrontMatterParser()->parse(file_get_contents($absolutePath));
-
-        $md = $result->getContent();
-
-        // THERE ARE THREE OPTIONS TO CONVERT MD TO HTML
-
-        $option = 1;
-
-        if ($option === 1) {
-            $htmlContent = (new GithubFlavoredMarkdownConverter())->convert($md);
-        }
-
-        if ($option === 2) {
-            $htmlContent = (
-                new MarkdownConverter(
-                    (new Environment([]))
-                        ->addExtension(new CommonMarkCoreExtension())
-                        ->addExtension(new GithubFlavoredMarkdownExtension())
-                        ->addExtension(new AlertExtension())
-                )
-            )->convert($md);
-        }
-
-        if ($option === 3) {
-            // Todo: Somehow include cURL "-L" option here.
-            $htmlContent = Http::accept('application/vnd.github+json')
-            ->withToken(config('grapho.github_api_token'))
-            ->withHeaders(['X-GitHub-Api-Version' => '2022-11-28'])
-            ->post('https://api.github.com/markdown', ['text' => $md, 'mode' => 'gfm'])
-            ->body();
-        }
-
-        $editLink = 'https://github.com/' . config('grapho.github_repo') . "/edit/main/{$path}.md";
-
-        $updateTime = Carbon::createFromTimestamp((new DocFile($absolutePath))->getMTime())->setTimezone('Australia/Adelaide')->format('g:i A, j F Y');
-
-        // $tocNode = GraphoController::tableOfContents();
-
-        $comments = GraphoComment::where('path', $path)->orderBy('created_at')->get();
-
-        $renderable = view('grapho::page', [
-            'online' => ! $pdf,
-            'htmlContent' => $htmlContent,
-            'editLink' => $editLink,
-            'breadcrumbs' => $breadcrumbs,
-            'updateTime' => $updateTime,
-            'comments' => $comments,
-            'path' => $path,
-        ]);
-
         if ($pdf) {
-            $output = WeasyPrint::prepareSource($renderable)->build();
+            $docNodeFile->refreshPdfFile();
 
-            $pdfFilename = $pathArray[count($pathArray) - 1] . '.pdf';
-
-            return $output->inline($pdfFilename);
+            return $docNodeFile->openPdf();
         }
 
-        return $renderable;
+        return $docNodeFile->getRenderable();
     })->where('path', '.+')->name('path');
 
     Route::post('/', [CommentController::class, 'postHome'])->name('home.comment.create');
