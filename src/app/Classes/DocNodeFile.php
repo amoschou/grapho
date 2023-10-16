@@ -151,7 +151,15 @@ class DocNodeFile
     {
         $output = WeasyPrint::prepareSource($this->getRenderable('pdf'))->build();
 
-        file_put_contents($this->absolutePathWithDotPdf, $output->getData());
+        $this->getPdfStorage()->put("{$this->relativePathWithNoSuffix}.pdf", $output);
+    }
+
+    private function getPdfStorage()
+    {
+        return Storage::build([
+            'driver' => 'local',
+            'root' => config('grapho.pdf_path'),
+        ]);
     }
 
     public function getHtmlContent()
@@ -249,9 +257,6 @@ class DocNodeFile
 
     public function openPdf()
     {
-        return Storage::build([
-            'driver' => 'local',
-            'root' => config('grapho.pdf_path'),
-        ])::download($this->relativePathWithNoSuffix);
+        return $this->getPdfStorage()::download($this->relativePathWithNoSuffix);
     }
 }
