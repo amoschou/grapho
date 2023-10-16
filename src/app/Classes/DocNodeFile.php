@@ -74,7 +74,7 @@ class DocNodeFile
         return false;
     }
 
-    public function refreshPdf()
+    public function refreshPdfFile()
     {
         if ($this->pdfFileIsStale()) {
             $this->savePdfFile();
