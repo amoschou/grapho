@@ -15,6 +15,7 @@ use League\CommonMark\MarkdownConverter;
 // use League\CommonMark\Parser\MarkdownParser;
 // use League\CommonMark\Renderer\HtmlRenderer;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Storage;
 use WeasyPrint\Facade as WeasyPrint;
 
 class DocNodeFile
