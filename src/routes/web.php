@@ -75,6 +75,8 @@ Route::middleware($middleware)->group(function () {
         $pdf = Str::endsWith($path, '.pdf');
 
         if ($pdf) {
+            $pdfAbsolutePath = config('pdf_path') . '/' . $path;
+
             $path = Str::replaceLast('.pdf', '', $path);
         }
 

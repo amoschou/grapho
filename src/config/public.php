@@ -15,6 +15,8 @@ return [
 
     'source_path' => resource_path('src/grapho'),
 
+    'pdf_path' => storage_path('grapho'),
+
     'github_repo' => 'githubusername/repositoryname',
 
     'github_api_token' => env('GH_API_TOKEN'),
