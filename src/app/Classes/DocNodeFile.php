@@ -213,7 +213,7 @@ class DocNodeFile
     {
         $defaultOptions = ['pdf' => false, 'online' => true];
 
-        $options = array_merge($defautOptions, $options);
+        $options = array_merge($defaultOptions, $options);
 
         $htmlContent = $this->getHtmlContent();
         $editLink = 'https://github.com/' . config('grapho.github_repo') . "/edit/main/{$this->relativePathWithNoSuffix}.md";
