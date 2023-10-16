@@ -152,7 +152,7 @@ class DocNodeFile
     {
         $output = WeasyPrint::prepareSource($this->getRenderable('pdf'))->build();
 
-        $this->getPdfStorage()->put("{$this->relativePathWithNoSuffix}.pdf", $output);
+        $this->getPdfStorage()->put("{$this->relativePathWithNoSuffix}.pdf", $output->getData());
     }
 
     private function getPdfStorage()
