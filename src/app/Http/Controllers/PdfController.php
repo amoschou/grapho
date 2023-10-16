@@ -24,7 +24,7 @@ class PdfController
             file_put_contents($file, $data);
         }
 
-        $pdf = new Pdf(array_keys($files))->cat()->saveAs($tmpDir('out.pdf'));
+        $pdf = (new Pdf(array_keys($files)))->cat()->saveAs($tmpDir('out.pdf'));
 
         $pdf->send('out.pdf', true);
 
