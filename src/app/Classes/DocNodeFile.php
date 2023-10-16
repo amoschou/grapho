@@ -176,7 +176,8 @@ class DocNodeFile
                 ->withHeaders(['X-GitHub-Api-Version' => '2022-11-28'])
                 ->post('https://api.github.com/markdown', ['text' => $md, 'mode' => 'gfm'])
                 ->body(),
-        }
+        };
+
         $this->htmlContent = $htmlContent;
     }
 
