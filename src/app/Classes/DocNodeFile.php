@@ -15,6 +15,8 @@ use League\CommonMark\MarkdownConverter;
 // use League\CommonMark\Parser\MarkdownParser;
 // use League\CommonMark\Renderer\HtmlRenderer;
 use Illuminate\Support\Carbon;
+use WeasyPrint\Facade as WeasyPrint;
+
 
 class DocNodeFile
 {
@@ -138,9 +140,9 @@ class DocNodeFile
 
     public function savePdfFile()
     {
-        $mdContent = $this->getMdContent();
+        $output = WeasyPrint::prepareSource($this->getRenderable('pdf'))->build();
 
-        ...
+        file_put_contents($this->absolutePathWithDotPdf, $output->getData());
     }
 
     public function getHtmlContent()
@@ -237,12 +239,9 @@ class DocNodeFile
 
     public function openPdf()
     {
-        $output = WeasyPrint::prepareSource($this->getRenderable(true))->build();
-
-        $pathArray = $this->pathArray();
-
-        $pdfFilename = $pathArray[count($pathArray) - 1] . '.pdf';
-
-        return $output->inline($pdfFilename);
+        return Storage::build([
+            'driver' => 'local',
+            'root' => config('grapho.pdf_path'),
+        ])::download($this->relativePathWithNoSuffix);
     }
 }
