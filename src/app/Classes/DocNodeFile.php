@@ -28,11 +28,11 @@ class DocNodeFile
     private string $absolutePathWithDotPdf;
     private SplFileInfo $pdfFile;
     private SplFileInfo $mdFile;
-    private array $breadcrumbs = null;
-    private string $mdContent = null;
-    private string $htmlContent = null;
-    private string $renderablePdf = null;
-    private string $renderableOnline = null;
+    private ?array $breadcrumbs = null;
+    private ?string $mdContent = null;
+    private ?string $htmlContent = null;
+    private ?string $renderablePdf = null;
+    private ?string $renderableOnline = null;
     private array $pathArray;
 
     public function __construct($relativePathWithNoSuffix)
