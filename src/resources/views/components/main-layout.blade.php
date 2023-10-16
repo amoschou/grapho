@@ -99,30 +99,32 @@
             </p>
         </header>
         <main class="markdown-body">{{ $slot }}</main>
-        <footer>
-            <div>
-                @if ($online || count($comments) > 0)
+            @if ($online || count($comments) > 0)
+                <footer>
+
                     <hr>
 
                     <h4>Comments</h4>
-                @endif
+            @endif
 
-                @if ($online)
-                    <form method="POST" action="{{ is_null($path) ? route('grapho.home.comment.create') : route('grapho.path.comment.create', ['path' => $path]) }}">
-                        @csrf
-                        <textarea rows="6" name="comment" style="display: block; width: calc(100% - 6px);"></textarea>
-                        <button type="submit">Save</button>
-                    </form>
-                @endif
+                    @if ($online)
+                        <form method="POST" action="{{ is_null($path) ? route('grapho.home.comment.create') : route('grapho.path.comment.create', ['path' => $path]) }}">
+                            @csrf
+                            <textarea rows="6" name="comment" style="display: block; width: calc(100% - 6px);"></textarea>
+                            <button type="submit">Save</button>
+                        </form>
+                    @endif
 
-                @foreach ($comments as $comment)
-                    <div>
-                        <p><strong>{{ $comment->user->name }} ({{ $comment->created_at }}):</strong></p>
-                        <p>{{ $comment->comment }}</p>
-                    </div>
-                @endforeach
-            </div>
-        </footer>
+                    @foreach ($comments as $comment)
+                        <div>
+                            <p><strong>{{ $comment->user->name }} ({{ $comment->created_at }}):</strong></p>
+                            <p>{{ $comment->comment }}</p>
+                        </div>
+                    @endforeach
+
+            @if ($online || count($comments) > 0)
+                </footer>
+            @endif
         {{--
         <script>
             document.querySelectorAll('blockquote > p:first-child').forEach((p) => {
