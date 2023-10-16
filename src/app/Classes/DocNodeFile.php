@@ -154,7 +154,7 @@ class DocNodeFile
         return $this->htmlContent;
     }
 
-    public function setHtmlContent($option)
+    public function setHtmlContent($option = 'gfm')
     {
         // THERE ARE THREE OPTIONS TO CONVERT MD TO HTML
         // INDICATED BY 'gfm', 'ext' and 'api'.
@@ -162,7 +162,7 @@ class DocNodeFile
         $md = $this->getMdContent();
 
         $htmlContent = match ($option) {
-            'gfm', default => (new GithubFlavoredMarkdownConverter())->convert($md),
+            'gfm' => (new GithubFlavoredMarkdownConverter())->convert($md),
             'ext' => (
                     new MarkdownConverter(
                         (new Environment([]))
