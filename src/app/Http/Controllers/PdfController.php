@@ -28,7 +28,7 @@ class PdfController
         
         $pdf->cat()->saveAs($tmpDir->path('out.pdf'));
 
-        $pdf->send('out.pdf', true);
+        $pdf->send('out.pdf', false);
 
         $tmpDir->delete();
     }
