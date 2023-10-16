@@ -67,11 +67,11 @@ Route::middleware($middleware)->group(function () {
 
         $docNodeFile = new DocNodeFile($relativePathWithNoSuffix);
 
-        if (is_dir($docNodeFile->absolutePathWithNoSuffix)) {
+        if (is_dir($docNodeFile->getAbsolutePathWithNoSuffix())) {
             return redirect()->route('grapho.home');
         }
 
-        if (! is_file($docNodeFile->absoltuePathWithMdSuffix)) {
+        if (! is_file($docNodeFile->getAbsoltuePathWithMdSuffix())) {
             abort(404);
         }
 

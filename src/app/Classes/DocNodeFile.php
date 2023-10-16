@@ -47,6 +47,16 @@ class DocNodeFile
         $this->pathArray = explode('/', $this->relativePathWithNoSuffix);
     }
 
+    public function getAbsolutePathWithNoSuffix()
+    {
+        return $this->absolutePathWithNoSuffix;
+    }
+
+    public function getAbsoltuePathWithMdSuffix()
+    {
+        return $this->absoltuePathWithMdSuffix;
+    }
+
     private function pdfFileIsStale()
     {
         if (! $docNodeFile->getPdfFile()->isFile()) {
