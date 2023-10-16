@@ -52,9 +52,9 @@ class DocNodeFile
         return $this->absolutePathWithNoSuffix;
     }
 
-    public function getAbsoltuePathWithMdSuffix()
+    public function getAbsolutePathWithDotMd()
     {
-        return $this->absoltuePathWithMdSuffix;
+        return $this->absolutePathWithDotMd;
     }
 
     private function pdfFileIsStale()

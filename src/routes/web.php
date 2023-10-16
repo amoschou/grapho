@@ -71,7 +71,7 @@ Route::middleware($middleware)->group(function () {
             return redirect()->route('grapho.home');
         }
 
-        if (! is_file($docNodeFile->getAbsoltuePathWithMdSuffix())) {
+        if (! is_file($docNodeFile->getAbsolutePathWithDotMd())) {
             abort(404);
         }
 
