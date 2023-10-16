@@ -100,10 +100,12 @@
         </header>
         <main class="markdown-body">{{ $slot }}</main>
         <footer>
-            <hr>
-
             <div>
-                <h4>Comments</h4>
+                @if ($online || count($comments) > 0)
+                    <hr>
+
+                    <h4>Comments</h4>
+                @endif
 
                 @if ($online)
                     <form method="POST" action="{{ is_null($path) ? route('grapho.home.comment.create') : route('grapho.path.comment.create', ['path' => $path]) }}">
