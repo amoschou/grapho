@@ -38,9 +38,9 @@ class DocNodeFile
         $this->relativePathWithNoSuffix = $relativePathWithNoSuffix;
         $this->sourcePath = $this->getSourcePath();
         $this->pdfPath = $this->getPdfPath();
-        $this->absolutePathWithNoSuffix = "{$this->sourcePath}/{$this->relativePathWithNoSuffix}"
-        $this->absolutePathWithDotMd = "{$this->sourcePath}/{$this->relativePathWithNoSuffix}.md"
-        $this->absolutePathWithDotPdf = "{$this->pdfPath}/{$this->relativePathWithNoSuffix}.pdf"
+        $this->absolutePathWithNoSuffix = "{$this->sourcePath}/{$this->relativePathWithNoSuffix}";
+        $this->absolutePathWithDotMd = "{$this->sourcePath}/{$this->relativePathWithNoSuffix}.md";
+        $this->absolutePathWithDotPdf = "{$this->pdfPath}/{$this->relativePathWithNoSuffix}.pdf";
         $this->mdFile = new SplFileInfo($this->absolutePathWithDotMd);
         $this->pdfFile = new SplFileInfo($this->absolutePathWithDotPdf);
         $this->pathArray = explode('/', $this->relativePathWithNoSuffix);
