@@ -45,7 +45,7 @@ Route::middleware($middleware)->group(function () {
             'updateTime' => null,
             'comments' => $comments,
             'path' => null,
-            'label' => null,
+            'label' => 'AAAA',
             'title' => null,
         ]);
 
