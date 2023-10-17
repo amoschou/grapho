@@ -65,6 +65,10 @@
             .markdown-body .color-note { color: #0969DA; }
             .markdown-body .color-important { color: #8250df; }
             .markdown-body .color-warning { color: #9A6700; }
+
+            OL { counter-reset: item }
+            LI { display: block }
+            LI:before { content: counters(item, ".") " "; counter-increment: item }
         </style>
         <style>
             @page {
