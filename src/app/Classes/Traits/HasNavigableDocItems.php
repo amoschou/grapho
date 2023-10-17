@@ -24,6 +24,19 @@ trait HasNavigableDocItems
 
     private $relativePath = null;
 
+    public function findParent()
+    {
+        $f = explode('/', $this->filename);
+        array_pop($f);
+        $parentPath = implode('/', $f);
+
+        if ($parentPath === config('grapho.source_path')) {
+            return null;
+        }
+
+        $this->parent = new DocFolder($parentPath);
+    }
+
     public function withParent($parent = null)
     {
         $this->parent = $parent;
@@ -61,6 +74,8 @@ trait HasNavigableDocItems
 
     public function getParent()
     {
+        $this->findParent();
+
         return $this->parent;
     }
 

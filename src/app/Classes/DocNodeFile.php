@@ -254,7 +254,7 @@ class DocNodeFile
                 'updateTime' => $updateTime,
                 'comments' => $comments,
                 'path' => $path,
-                'label' => $label.'BBBB',
+                'label' => $label,
                 'title' => $title,
             ]);
         }
@@ -268,7 +268,7 @@ class DocNodeFile
                 'updateTime' => $updateTime,
                 'comments' => $comments,
                 'path' => $path,
-                'label' => $label.'CCCC',
+                'label' => $label,
                 'title' => $title,
             ]);
         }
