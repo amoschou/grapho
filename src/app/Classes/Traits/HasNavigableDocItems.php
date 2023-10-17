@@ -26,13 +26,19 @@ trait HasNavigableDocItems
 
     public function findParent()
     {
-        // if (is_null($this->parent)) {
-        //     $f = explode('/', $this->getRealPath());
-        //     array_pop($f);
-        //     $parentPath = implode('/', $f);
-    
-        //     $this->parent = $parentPath === config('grapho.source_path') ? null : new DocFolder($parentPath);
-        // }
+        is (! is_null($this->parent)) {
+            return;
+        }
+
+        if ($this->getRealPath() === config('grapho.source_path')) {
+            return;
+        }
+
+        $f = explode('/', $this->getRealPath());
+        array_pop($f);
+        $parentPath = implode('/', $f);
+
+        $this->parent = new DocFolder($parentPath);
     }
 
     public function withParent($parent = null)
