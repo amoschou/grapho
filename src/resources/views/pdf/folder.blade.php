@@ -5,6 +5,8 @@
     $path = null;
     $comments = [];
     $online = false;
+    $label = null;
+    $title = null;
 ?>
 
 <x-grapho::main-layout
@@ -14,6 +16,8 @@
     :path="$path"
     :comments="$comments"
     :online="$online"
+    :label="$label"
+    :title="$title"
 >
 
 <h2>Table of contents</h2>
