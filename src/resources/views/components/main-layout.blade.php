@@ -78,7 +78,11 @@
     <body>
         <header>
             <p><strong>{{ config('app.name', 'Laravel') }}</strong></p>
-            <h1>{{ is_null($label) ? '' : '<small>'.$label.'</small>&emsp;' }}{{ $title }}</h1>
+            @if (! is_null($label) || ! is_null($title)) <h1> @endif
+                @if (! is_null($label)) <small>{{ $label }}</small> @endif
+                @if (! is_null($label) && ! is_null($title)) &emsp; @endif
+                @if (! is_null($title)) {{ $title }} @endif
+            @if (! is_null($label) || ! is_null($title)) </h1> @endif
 
             <nav>
                 @if ($online) <x-grapho::auth-links></x-grapho::auth-links> @endif
