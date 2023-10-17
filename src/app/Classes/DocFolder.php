@@ -128,7 +128,7 @@ class DocFolder extends SplFileInfo
         return $tree;
     }
 
-    public function listContents($maxDepth = null, $currentLevel = 0, $indent = '')
+    public function listContents($currentLevel = 0, $maxDepth = null, $indent = '', $wrap = ['ol', 'li'])
     {
         $bigIndent = "{$indent}    ";
 
@@ -139,21 +139,23 @@ class DocFolder extends SplFileInfo
 
             foreach ($this->getChildren() as $child) {
                 if (is_null($maxDepth) || ($currentLevel <= $maxDepth)) {
-                    $listItems[] = "{$bigIndent}<li>" . $child->getTitle() . '</li>';
+                    $listItems[] = $bigIndent. "<{$wrap[1]}>" . $child->getTitle() . "<\{$wrap[1]}>";
                 }
 
                 if ($child instanceof DocFolder) {
-                    $listItems = array_merge($listItems, $child->listContents($maxDepth, $currentLevel, $bigIndent));
+                    $listItems = array_merge($listItems, $child->listContents($currentLevel, $maxDepth, $bigIndent, $wrap));
                 }
             }
 
             $currentLevel--;
         }
 
+        $olClass = 'contents-list-' . ($currentLevel + 1);
+
         return count($listItems) === 0 ? [] : [
-            $indent . '<ol class="ol' . ($currentLevel + 1) . '">',
+            $indent . "<{$wrap[0]} class=\"{$olClass}\">",
             ...$listItems,
-            $indent . '</ol>',
+            $indent . "<\{$wrap[0]}>",
         ];
     }
 
