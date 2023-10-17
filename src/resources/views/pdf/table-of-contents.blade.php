@@ -16,6 +16,10 @@
     :online="$online"
 >
 
+<style>
+    contents-list { padding-left: 15px; }
+</style>
+
 <h2>Table of contents</h2>
 
 <?php

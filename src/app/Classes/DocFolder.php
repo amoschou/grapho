@@ -139,7 +139,7 @@ class DocFolder extends SplFileInfo
 
             foreach ($this->getChildren() as $child) {
                 if (is_null($maxDepth) || ($currentLevel <= $maxDepth)) {
-                    $liClass = 'contents-list-item-' . $currentLevel;
+                    $liClass = 'contents-list-item';
 
                     $listItems[] = $bigIndent. "<{$wrap[1]} class=\"{$liClass}\">" . $child->getTitle() . "</{$wrap[1]}>";
                 }
@@ -152,7 +152,7 @@ class DocFolder extends SplFileInfo
             $currentLevel--;
         }
 
-        $olClass = 'contents-list-' . ($currentLevel + 1);
+        $olClass = 'contents-list contents-list-level-' . ($currentLevel + 1);
 
         return count($listItems) === 0 ? [] : [
             $indent . "<{$wrap[0]} class=\"{$olClass}\">",
