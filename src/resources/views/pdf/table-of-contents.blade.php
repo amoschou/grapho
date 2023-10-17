@@ -21,7 +21,7 @@
 <?php
     $doc = new \AMoschou\Grapho\App\Classes\DocFolder(config('grapho.source_path'));
 
-    echo implode("\n", $doc->listContents());
+    echo implode("\n", $doc->listContents(wrap: ['div', 'div']));
 ?>
 
 </x-grapho::main-layout>
