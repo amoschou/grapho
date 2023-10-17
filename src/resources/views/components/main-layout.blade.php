@@ -77,7 +77,7 @@
     <body>
         <header>
             <p>{{ config('app.name', 'Laravel') }}</p>
-            <h1>{{ $label }}</h1>
+            <h1><small>{{ $label }}</small>&emsp;{{ $title}}</h1>
 
             <nav>
                 @if ($online) <x-grapho::auth-links></x-grapho::auth-links> @endif
