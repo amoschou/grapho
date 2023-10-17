@@ -17,7 +17,16 @@
 >
 
 <style>
-    .contents-list { padding-left: 2em; }
+    .contents-list > .contents-list-item > span {
+        width: 48px;
+        display: inline-block;
+        text-align: right;
+        margin-right: 16px;
+    }
+
+    .contents-list .contents-list {
+        padding-left: 40px;
+    }
 </style>
 
 <h2>Table of contents</h2>
