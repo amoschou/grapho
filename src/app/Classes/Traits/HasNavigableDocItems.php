@@ -147,7 +147,7 @@ trait HasNavigableDocItems
             $i = 0;
             $thisLabel = null;
             foreach ($this->getParent()->getSiblingsAndSelf() as $topSection) {
-                foreach ($topSection->getChildren() as $nextTopSection) {
+                foreach ($topSection->getChildren() as $item) {
                     $i++;
                     if ($item->getRealPath() === $this->getRealPath()) {
                         $thisLabel = $i;
