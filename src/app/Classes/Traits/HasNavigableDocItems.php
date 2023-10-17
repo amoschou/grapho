@@ -26,7 +26,7 @@ trait HasNavigableDocItems
 
     public function findParent()
     {
-        is (! is_null($this->parent)) {
+        if (! is_null($this->parent)) {
             return;
         }
 
