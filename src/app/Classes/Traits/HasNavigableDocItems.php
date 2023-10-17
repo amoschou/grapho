@@ -153,7 +153,7 @@ trait HasNavigableDocItems
             $thisLabel = null;
             foreach ($siblingsAndSelf as $item) {
                 $i++;
-                if ($item->getRealPath() === $this->getRealpath()) {
+                if ($item->getRealPath() === $this->getRealPath()) {
                     $thisLabel = $i;
                 }
             }
