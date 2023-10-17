@@ -34,6 +34,7 @@ class DocNodeFile
     private ?string $renderablePdf = null;
     private ?string $renderableOnline = null;
     private array $pathArray;
+    private DocFile $docFile;
 
     public function __construct($relativePathWithNoSuffix)
     {
@@ -46,11 +47,17 @@ class DocNodeFile
         $this->mdFile = new SplFileInfo($this->absolutePathWithDotMd);
         $this->pdfFile = new SplFileInfo($this->absolutePathWithDotPdf);
         $this->pathArray = explode('/', $this->relativePathWithNoSuffix);
+        $this->docFile = new DocFile($this->absolutePathWithDotMd);
     }
 
     public function getLabel()
     {
-        return (new DocFile($this->absolutePathWithDotMd))->getLabel();
+        return $this->docFile->getLabel();
+    }
+
+    public function getTitle()
+    {
+        return $this->docFile->getTitle();
     }
 
     public function getAbsolutePathWithNoSuffix()
@@ -236,6 +243,7 @@ class DocNodeFile
         $comments = GraphoComment::where('path', $this->relativePathWithNoSuffix)->orderBy('created_at')->get();
         $path = $this->relativePathWithNoSuffix;
         $label = $this->getLabel();
+        $title = $this->getTitle();
 
         if ($options['pdf']) {
             $this->renderablePdf = view('grapho::page', [
@@ -247,6 +255,7 @@ class DocNodeFile
                 'comments' => $comments,
                 'path' => $path,
                 'label' => $label,
+                'title' => $title,
             ]);
         }
 
@@ -259,7 +268,8 @@ class DocNodeFile
                 'updateTime' => $updateTime,
                 'comments' => $comments,
                 'path' => $path,
-                'null' => $label,
+                'label' => $label,
+                'title' => $title,
             ]);
         }
     }

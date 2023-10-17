@@ -38,7 +38,7 @@ Route::middleware($middleware)->group(function () {
 
         $renderable = view('grapho::page', [
             'online' => ! $pdf,
-            'htmlContent' => '',
+            'htmlContent' => '<h1>' . config('app.name', 'Laravel') . '</h1>',
             'tocNode' => $tocNode,
             'editLink' => '#',
             'breadcrumbs' => [],
@@ -46,6 +46,7 @@ Route::middleware($middleware)->group(function () {
             'comments' => $comments,
             'path' => null,
             'label' => null,
+            'title' => null,
         ]);
 
         if ($pdf) {
