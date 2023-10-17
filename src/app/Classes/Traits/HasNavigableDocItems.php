@@ -145,7 +145,7 @@ trait HasNavigableDocItems
         if ($thisIsNextTopSection) {
             $siblingsAndSelf = [];
             foreach ($this->getParent()->getSiblingsAndSelf() as $topSection) {
-                foreach ($topSection as $nextTopSection) {
+                foreach ($topSection->getChildren() as $nextTopSection) {
                     $siblingsAndSelf[] = $nextTopSection;
                 }
             }
