@@ -144,18 +144,14 @@ trait HasNavigableDocItems
         $thisIsNextTopSection = is_null($this->getParent()->getParent()->getParent());
 
         if ($thisIsNextTopSection) {
-            $siblingsAndSelf = [];
-            foreach ($this->getParent()->getSiblingsAndSelf() as $topSection) {
-                foreach ($topSection->getChildren() as $nextTopSection) {
-                    $siblingsAndSelf[] = $nextTopSection;
-                }
-            }
             $i = 0;
             $thisLabel = null;
-            foreach ($siblingsAndSelf as $item) {
-                $i++;
-                if ($item->getRealPath() === $this->getRealPath()) {
-                    $thisLabel = $i;
+            foreach ($this->getParent()->getSiblingsAndSelf() as $topSection) {
+                foreach ($topSection->getChildren() as $nextTopSection) {
+                    $i++;
+                    if ($item->getRealPath() === $this->getRealPath()) {
+                        $thisLabel = $i;
+                    }
                 }
             }
             return $thisLabel;
