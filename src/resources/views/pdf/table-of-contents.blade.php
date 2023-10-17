@@ -17,7 +17,7 @@
 >
 
 <style>
-    contents-list { padding-left: 15px; }
+    .contents-list { padding-left: 2em; }
 </style>
 
 <h2>Table of contents</h2>

@@ -128,7 +128,7 @@ class DocFolder extends SplFileInfo
         return $tree;
     }
 
-    public function listContents($currentLevel = 0, $maxDepth = null, $indent = '', $wrap = ['ol', 'li'])
+    public function listContents($currentLevel = 0, $maxDepth = null, $indent = '')
     {
         $bigIndent = "{$indent}    ";
 
@@ -139,25 +139,24 @@ class DocFolder extends SplFileInfo
 
             foreach ($this->getChildren() as $child) {
                 if (is_null($maxDepth) || ($currentLevel <= $maxDepth)) {
-                    $liClass = 'contents-list-item';
+                    $childLabel = $child->getLabel();
+                    $childTitle = $child->getTitle();
 
-                    $listItems[] = $bigIndent. "<{$wrap[1]} class=\"{$liClass}\">" . $child->getTitle() . "</{$wrap[1]}>";
+                    $listItems[] = $bigIndent. "<div class=\"contents-list-item\"><span>{$childLabel}</span>{$childTitle}</div>";
                 }
 
                 if ($child instanceof DocFolder) {
-                    $listItems = array_merge($listItems, $child->listContents($currentLevel, $maxDepth, $bigIndent, $wrap));
+                    $listItems = array_merge($listItems, $child->listContents($currentLevel, $maxDepth, $bigIndent));
                 }
             }
 
             $currentLevel--;
         }
 
-        $olClass = 'contents-list contents-list-level-' . ($currentLevel + 1);
-
         return count($listItems) === 0 ? [] : [
-            $indent . "<{$wrap[0]} class=\"{$olClass}\">",
+            $indent . "<div class=\"contents-list\">",
             ...$listItems,
-            $indent . "</{$wrap[0]}>",
+            $indent . '</div>',
         ];
     }
 

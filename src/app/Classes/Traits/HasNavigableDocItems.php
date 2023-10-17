@@ -112,4 +112,9 @@ trait HasNavigableDocItems
 
         return $children;
     }
+
+    public function getLabel()
+    {
+        return '?';
+    }
 }
