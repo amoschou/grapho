@@ -48,6 +48,11 @@ class DocNodeFile
         $this->pathArray = explode('/', $this->relativePathWithNoSuffix);
     }
 
+    public function getLabel()
+    {
+        return (new DocFile($this->absolutePathWithDotMd))->getLabel();
+    }
+
     public function getAbsolutePathWithNoSuffix()
     {
         return $this->absolutePathWithNoSuffix;
@@ -230,6 +235,7 @@ class DocNodeFile
         $updateTime = Carbon::createFromTimestamp($this->getMdFile()->getMTime())->setTimezone('Australia/Adelaide')->format('g:i A, j F Y');
         $comments = GraphoComment::where('path', $this->relativePathWithNoSuffix)->orderBy('created_at')->get();
         $path = $this->relativePathWithNoSuffix;
+        $label = $this->getLabel();
 
         if ($options['pdf']) {
             $this->renderablePdf = view('grapho::page', [
@@ -240,6 +246,7 @@ class DocNodeFile
                 'updateTime' => $updateTime,
                 'comments' => $comments,
                 'path' => $path,
+                'label' => null,
             ]);
         }
 
@@ -252,6 +259,7 @@ class DocNodeFile
                 'updateTime' => $updateTime,
                 'comments' => $comments,
                 'path' => $path,
+                'null' => $label,
             ]);
         }
     }

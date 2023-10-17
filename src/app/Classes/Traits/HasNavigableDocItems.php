@@ -4,6 +4,7 @@ namespace AMoschou\Grapho\App\Classes\Traits;
 
 use AMoschou\Grapho\App\Classes\DocFile;
 use AMoschou\Grapho\App\Classes\DocFolder;
+use Romans\Filter\IntToRoman;
 
 trait HasNavigableDocItems
 {
@@ -113,7 +114,7 @@ trait HasNavigableDocItems
         return $children;
     }
 
-    private function getSiblingsAndSelf()
+    public function getSiblingsAndSelf()
     {
         return $this->getParent()->getChildren();
     }
@@ -137,7 +138,7 @@ trait HasNavigableDocItems
                     $thisLabel = $i;
                 }
             }
-            return 'R'.$thisLabel;
+            return (new IntToRoman())->filter($thisLabel);
         }
 
         $thisIsNextTopSection = is_null($this->getParent()->getParent()->getParent());

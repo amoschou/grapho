@@ -5,4 +5,5 @@
     :path="$path"
     :comments="$comments"
     :online="$online"
+    :label="$label"
 >{!! $htmlContent !!}</x-grapho::main-layout>
