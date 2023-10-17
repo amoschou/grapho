@@ -6,4 +6,5 @@
     :comments="$comments"
     :online="$online"
     :label="$label"
+    :title="$title"
 >{!! $htmlContent !!}</x-grapho::main-layout>

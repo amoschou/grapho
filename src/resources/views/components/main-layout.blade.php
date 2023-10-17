@@ -6,6 +6,7 @@
     'comments',
     'online',
     'label',
+    'title',
 ])
 
 <!DOCTYPE html>
