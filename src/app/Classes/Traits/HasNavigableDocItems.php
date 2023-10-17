@@ -120,9 +120,9 @@ trait HasNavigableDocItems
 
     public function getLabel()
     {
-        $thisIsRoot = is_null($this->getParent();
+        $thisIsRoot = is_null($this->getParent());
 
-        if ($thisIsRoot)) {
+        if ($thisIsRoot) {
             return null;
         }
 
