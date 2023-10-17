@@ -18,18 +18,13 @@
 
 <style>
     ol {
-        counter-reset: section; /* Creates a new instance of the
-                                    section counter with each ol
-                                    element */
+        counter-reset: section; /* Creates a new instance of the section counter with each ol element */
         list-style-type: none;
     }
 
-    li::before {
-        counter-increment: section; /* Increments only this instance
-                                                    of the section counter */
-        content: counters(section, ".") " "; /* Combines the values of all instances
-                                                of the section counter, separated
-                                                by a period */
+    li::marker {
+        counter-increment: section; /* Increments only this instance of the section counter */
+        content: counters(section, ".") " "; /* Combines the values of all instances of the section counter, separated by a period */
     }
 
     .markdown-body ol {
