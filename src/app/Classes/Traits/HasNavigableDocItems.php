@@ -133,7 +133,7 @@ trait HasNavigableDocItems
             }
         }
 
-        if (! $foundItem) {
+        if (! $foundThis) {
             return 'NOTFOUND';
         }
 
