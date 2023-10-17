@@ -26,7 +26,7 @@ trait HasNavigableDocItems
 
     public function findParent()
     {
-        $f = explode('/', $this->filename);
+        $f = explode('/', $this->getRealPath());
         array_pop($f);
         $parentPath = implode('/', $f);
 
