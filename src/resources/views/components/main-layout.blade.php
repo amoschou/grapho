@@ -5,6 +5,7 @@
     'path',
     'comments',
     'online',
+    'label',
 ])
 
 <!DOCTYPE html>
@@ -75,7 +76,8 @@
     </head>
     <body>
         <header>
-            <h1>{{ config('app.name', 'Laravel') }}</h1>
+            <p>{{ config('app.name', 'Laravel') }}</p>
+            <h1>{{ $label }}</h1>
 
             <nav>
                 @if ($online) <x-grapho::auth-links></x-grapho::auth-links> @endif

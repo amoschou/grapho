@@ -246,7 +246,7 @@ class DocNodeFile
                 'updateTime' => $updateTime,
                 'comments' => $comments,
                 'path' => $path,
-                'label' => null,
+                'label' => $label,
             ]);
         }
 
