@@ -113,8 +113,36 @@ trait HasNavigableDocItems
         return $children;
     }
 
-    public function getLabel()
+    public function getLabel($format = 'numeric')
     {
-        return '?';
+        if (is_null($this->getParent())) {
+            return null;
+        }
+
+        $this->getRealPath(); // REAL PATH OF THIS ITEM
+
+        $i = 0;
+        $foundThis = false;
+        foreach ($this->getParent()->getChildren() as $item) {
+            if (! $foundThis) {
+                $i++;
+            }
+
+            if (! $foundThis && ($item->getRealPath() === $this->getRealPath())) {
+                $foundThis = true;
+            }
+        }
+
+        if (! $foundItem) {
+            return 'NOTFOUND';
+        }
+
+        $thisLabel = match ($format) {
+            'numeric' => $i,
+        };
+
+        $parentLabel = $this->getParent()->getLabel();
+
+        return is_null($parentLabel) ? $thisLabel : "{$parentLabel}.{$thisLabel}";
     }
 }
