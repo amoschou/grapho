@@ -113,36 +113,64 @@ trait HasNavigableDocItems
         return $children;
     }
 
-    public function getLabel($format = 'numeric')
+    private function getSiblingsAndSelf()
     {
-        if (is_null($this->getParent())) {
+        return $this->getParent()->getChildren();
+    }
+
+    public function getLabel()
+    {
+        $thisIsRoot = is_null($this->getParent();
+
+        if ($thisIsRoot)) {
             return null;
         }
 
-        $this->getRealPath(); // REAL PATH OF THIS ITEM
+        $thisIsTopSection = is_null($this->getParent()->getParent());
+
+        if ($thisIsTopSection) {
+            $i = 0;
+            $thisLabel = null;
+            foreach ($this->getSiblingsAndSelf() as $item) {
+                $i++;
+                if ($item->getRealPath() === $this->getRealPath()) {
+                    $thisLabel = $i;
+                }
+            }
+            return 'R'.$thisLabel;
+        }
+
+        $thisIsNextTopSection = is_null($this->getParent()->getParent()->getParent());
+
+        if ($thisIsNextTopSection) {
+            $siblingsAndSelf = [];
+            foreach ($this->getParent()->getSiblingsAndSelf() as $topSection) {
+                foreach ($topSection as $nextTopSection) {
+                    $siblingsAndSelf[] = $nextTopSection;
+                }
+            }
+            $i = 0;
+            $thisLabel = null;
+            foreach ($siblingsAndSelf as $item) {
+                $i++;
+                if ($item->getRealPath() === $this->getRealpath()) {
+                    $thisLabel = $i;
+                }
+            }
+            return $thisLabel;
+        }
 
         $i = 0;
-        $foundThis = false;
-        foreach ($this->getParent()->getChildren() as $item) {
-            if (! $foundThis) {
-                $i++;
-            }
-
-            if (! $foundThis && ($item->getRealPath() === $this->getRealPath())) {
-                $foundThis = true;
+        $thisLabel = null;
+        foreach ($this->getSiblingsAndSelf() as $item) {
+            $i++;
+            if ($item->getRealPath() === $this->getRealPath()) {
+                $thisLabel = $i;
             }
         }
-
-        if (! $foundThis) {
-            return 'NOTFOUND';
-        }
-
-        $thisLabel = match ($format) {
-            'numeric' => $i,
-        };
 
         $parentLabel = $this->getParent()->getLabel();
 
-        return is_null($parentLabel) ? $thisLabel : "{$parentLabel}.{$thisLabel}";
+        return "{$parentLabel}.{$thisLabel}";
     }
 }

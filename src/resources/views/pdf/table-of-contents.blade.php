@@ -18,10 +18,12 @@
 
 <style>
     .contents-list > .contents-list-item > span {
-        width: 48px;
+        width: 64px;
         display: inline-block;
         text-align: right;
         margin-right: 16px;
+        font-size: small;
+        color: gray;
     }
 
     .contents-list .contents-list {
