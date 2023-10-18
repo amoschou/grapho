@@ -34,7 +34,7 @@ class PdfController
 
             $pdf->cat()->saveAs($tmpDir->path('out.pdf'));
 
-            $pdf->send('out.pdf', false);
+            $pdf->send('out-async.pdf', false);
 
             $tmpDir->delete();
         })->then(function ($output) {
@@ -42,6 +42,8 @@ class PdfController
         })->catch(function (Throwable $exception) {
             // Handle exception
         });
+
+        return "Done.";
     }
 
     public function pdf()
