@@ -2,6 +2,7 @@
 
 namespace AMoschou\Grapho\App\Http\Controllers;
 
+use AMoschou\Grapho\App\Tasks\GeneratePdf;
 use mikehaertl\pdftk\Pdf;
 use Spatie\Async\Pool;
 use Spatie\TemporaryDirectory\TemporaryDirectory;
@@ -18,32 +19,9 @@ class PdfController
 
         $pool = Pool::create();
 
-        $pool->add(function () use ($views) {
-            $tmpDir = TemporaryDirectory::make();
+        $pool->add(new GeneratePdf());
 
-            $pdfs = [];
-            $paths = [];
-
-            foreach ($views as $tag => $view) {
-                $path = $tmpDir->path($tag . '.pdf');
-                $paths[] = $path;
-                file_put_contents($path, WeasyPrint::prepareSource($view)->build()->getData());
-            }
-
-            $pdf = new Pdf($paths);
-
-            $pdf->cat()->saveAs($tmpDir->path('out.pdf'));
-
-            $pdf->send('out-async.pdf', false);
-
-            $tmpDir->delete();
-        })->then(function ($output) {
-            // Handle success
-        })->catch(function (Throwable $exception) {
-            // Handle exception
-        });
-
-        return "Done.";
+        return 'Done.';
     }
 
     public function pdf()
