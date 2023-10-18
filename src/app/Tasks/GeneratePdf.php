@@ -10,8 +10,6 @@ class GeneratePdf extends Task
 {
     public function configure()
     {
-        dd('x');
-
         require __DIR__ .'/../../../../../vendor/autoload.php';
 
         $app = require_once __DIR__ .'/../../../../../bootstrap/app.php';
@@ -25,8 +23,6 @@ class GeneratePdf extends Task
 
     public function run()
     {
-        dd('a');
-
         $tmpDir = TemporaryDirectory::make();
 
         $pdfs = [];

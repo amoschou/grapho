@@ -12,6 +12,8 @@ class PdfController
 {
     public function pdfAsync()
     {
+        dd(Pool::isSupported());
+
         $views = [
             'front-cover' => view('grapho::pdf.front-cover'),
             'table-of-contents' => view('grapho::pdf.table-of-contents'),
