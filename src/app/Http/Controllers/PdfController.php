@@ -10,22 +10,6 @@ use WeasyPrint\Facade as WeasyPrint;
 
 class PdfController
 {
-    public function pdfAsync()
-    {
-        dd(Pool::isSupported());
-
-        $views = [
-            'front-cover' => view('grapho::pdf.front-cover'),
-            'table-of-contents' => view('grapho::pdf.table-of-contents'),
-        ];
-
-        $pool = Pool::create();
-
-        $pool->add(new GeneratePdf());
-
-        return 'Done.';
-    }
-
     public function pdf()
     {
         $tmpDir = TemporaryDirectory::make();
