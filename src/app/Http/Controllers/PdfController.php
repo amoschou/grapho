@@ -25,10 +25,9 @@ class PdfController
             $paths = [];
 
             foreach ($views as $tag => $view) {
-                $pdfs[$tag] = WeasyPrint::prepareSource($view)->build();
                 $path = $tmpDir->path($tag . '.pdf');
                 $paths[] = $path;
-                file_put_contents($path, $pdfs[$tag]->getData());
+                file_put_contents($path, WeasyPrint::prepareSource($view)->build()->getData());
             }
 
             $pdf = new Pdf($paths);
