@@ -6,7 +6,7 @@ use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Http\Request;
 use Spatie\Async\Task;
 
-class GeneratePdf extends Task;
+class GeneratePdf extends Task
 {
     public function configure()
     {
