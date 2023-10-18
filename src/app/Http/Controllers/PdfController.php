@@ -3,11 +3,48 @@
 namespace AMoschou\Grapho\App\Http\Controllers;
 
 use mikehaertl\pdftk\Pdf;
+use Spatie\Async\Pool;
 use Spatie\TemporaryDirectory\TemporaryDirectory;
 use WeasyPrint\Facade as WeasyPrint;
 
 class PdfController
 {
+    public function pdfAsync()
+    {
+        $views = [
+            'front-cover' => view('grapho::pdf.front-cover'),
+            'table-of-contents' => view('grapho::pdf.table-of-contents'),
+        ];
+
+        $pool = Pool::create();
+
+        $pool->add(function () use ($views) {
+            $tmpDir = TemporaryDirectory::make();
+
+            $pdfs = [];
+            $paths = [];
+
+            foreach ($views as $tag => $view) {
+                $pdfs[$tag] = WeasyPrint::prepareSource($view)->build();
+                $path = $tmpDir->path($tag . '.pdf');
+                $paths[] = $path;
+                file_put_contents($path, $pdfs[$tag]->getData());
+            }
+
+            $pdf = new Pdf($paths);
+
+            $pdf->cat()->saveAs($tmpDir->path('out.pdf'));
+
+            $pdf->send('out.pdf', false);
+
+            $tmpDir->delete();
+        })->then(function ($output) {
+            // Handle success
+        })->catch(function (Throwable $exception) {
+            // Handle exception
+        });
+    }
+
     public function pdf()
     {
         $tmpDir = TemporaryDirectory::make();

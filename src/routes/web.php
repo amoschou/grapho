@@ -27,6 +27,8 @@ $middleware = config('grapho.middleware'); // Apply this explicitly. For future,
 Route::middleware($middleware)->group(function () {
     Route::get('/pdf', [PdfController::class, 'pdf']);
 
+    Route::get('/pdf/async', [PdfController::class, 'pdfAsync']);
+
     Route::get('/pdf/section/{section}', [PdfController::class, 'section']);
 
     Route::get('/', function () {
