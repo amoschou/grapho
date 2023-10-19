@@ -56,7 +56,7 @@ class PdfController
         return view('grapho::pdf.table-of-contents');
     }
 
-    private function buildPdfs()
+    public function buildPdfs()
     {
         $doc = new \AMoschou\Grapho\App\Classes\DocFolder(config('grapho.source_path'));
 
