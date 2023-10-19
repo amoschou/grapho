@@ -63,14 +63,17 @@ class PdfController
         $arr = $doc->arrayContents();
 
         foreach ($arr as $page) {
-            if ($page['child']::class instanceof DocFolder) {
+            if ($page['child'] instanceof DocFolder) {
                 // quietly ignore this for now
             }
 
-            if ($page['child']::class instanceof DocFile) {
+            if ($page['child'] instanceof DocFile) {
                 $output = WeasyPrint::prepareSource($page['child']->getRenderable('pdf'))->build();
 
-                $this->getPdfStorage()->put("build/{$this->relativePathWithNoSuffix}.pdf", $output->getData());
+                Storage::build([
+                    'driver' => 'local',
+                    'root' => config('grapho.pdf_path'),
+                ])->put("build/{$page['relpath']}.pdf", $output->getData());
             }
         }
 
