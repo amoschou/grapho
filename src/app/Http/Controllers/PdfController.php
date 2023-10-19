@@ -4,11 +4,13 @@ namespace AMoschou\Grapho\App\Http\Controllers;
 
 use AMoschou\Grapho\App\Classes\DocFile;
 use AMoschou\Grapho\App\Classes\DocFolder;
+use AMoschou\Grapho\App\Classes\DocNodeFile;
 use AMoschou\Grapho\App\Tasks\GeneratePdf;
 use mikehaertl\pdftk\Pdf;
 use Spatie\Async\Pool;
 use Spatie\TemporaryDirectory\TemporaryDirectory;
 use WeasyPrint\Facade as WeasyPrint;
+use Illuminate\Support\Facades\Storage;
 
 class PdfController
 {
