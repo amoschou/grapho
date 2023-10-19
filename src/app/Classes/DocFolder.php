@@ -174,6 +174,7 @@ class DocFolder extends SplFileInfo
 
                     $listItems[] = [
                         'child' => $child,
+                        'relpath' => $child->getRelativePath();
                         'label' => $childLabel,
                         'title' => $childTitle,
                     ];
