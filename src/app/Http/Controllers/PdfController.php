@@ -62,6 +62,18 @@ class PdfController
 
         $arr = $doc->arrayContents();
 
-        dd($arr);
+        foreach ($arr as $page) {
+            if ($page['child']::class instanceof DocFolder) {
+                // quietly ignore this for now
+            }
+
+            if ($page['child']::class instanceof DocFile) {
+                $output = WeasyPrint::prepareSource($page['child']->getRenderable('pdf'))->build();
+
+                $this->getPdfStorage()->put("build/{$this->relativePathWithNoSuffix}.pdf", $output->getData());
+            }
+        }
+
+        dd('Done');
     }
 }
