@@ -27,7 +27,7 @@ $middleware = config('grapho.middleware'); // Apply this explicitly. For future,
 Route::middleware($middleware)->group(function () {
     Route::get('/pdf', [PdfController::class, 'pdf']);
 
-    Route::get('/pdf/async', [PdfController::class, 'pdfAsync']);
+    Route::get('/pdf/build', [PdfController::class, 'buildPdfs']);
 
     Route::get('/pdf/section/{section}', [PdfController::class, 'section']);
 
@@ -47,7 +47,7 @@ Route::middleware($middleware)->group(function () {
             'updateTime' => null,
             'comments' => $comments,
             'path' => null,
-            'label' => 'AAAA',
+            'label' => null,
             'title' => null,
         ]);
 
@@ -68,15 +68,17 @@ Route::middleware($middleware)->group(function () {
     })->name('home');
 
     Route::get('/{path}', function (string $path) {
-        $pdf = Str::endsWith($path, '.pdf');
+        $isPdf = Str::endsWith($path, '.pdf');
 
-        $relativePathWithNoSuffix = $pdf ? Str::replaceLast('.pdf', '', $path) : $path;
+        $relativePathWithNoSuffix = $isPdf ? Str::replaceLast('.pdf', '', $path) : $path;
 
         $docNodeFile = new DocNodeFile($relativePathWithNoSuffix);
 
         if (is_dir($docNodeFile->getAbsolutePathWithNoSuffix())) {
-            if ($pdf) {
-                // CREATE PDF HERE.
+            if ($isPdf) {
+                // CREATE THE FOLDER PDF HERE.
+
+                // RETURN THE FOLDER PDF HERE.
             }
 
             return redirect()->route('grapho.home');
@@ -84,7 +86,7 @@ Route::middleware($middleware)->group(function () {
 
         abort_if(! is_file($docNodeFile->getAbsolutePathWithDotMd()), 404);
 
-        return $pdf
+        return $isPdf
             ? $docNodeFile->openPdf()
             : $docNodeFile->getRenderable();
     })->where('path', '.+')->name('path');

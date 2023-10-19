@@ -43,7 +43,7 @@ class DocNodeFile
         $this->pdfPath = $this->getPdfPath();
         $this->absolutePathWithNoSuffix = "{$this->sourcePath}/{$this->relativePathWithNoSuffix}";
         $this->absolutePathWithDotMd = "{$this->sourcePath}/{$this->relativePathWithNoSuffix}.md";
-        $this->absolutePathWithDotPdf = "{$this->pdfPath}/{$this->relativePathWithNoSuffix}.pdf";
+        $this->absolutePathWithDotPdf = "{$this->pdfPath}/build/{$this->relativePathWithNoSuffix}.pdf";
         $this->mdFile = new SplFileInfo($this->absolutePathWithDotMd);
         $this->pdfFile = new SplFileInfo($this->absolutePathWithDotPdf);
         $this->pathArray = explode('/', $this->relativePathWithNoSuffix);
@@ -80,7 +80,7 @@ class DocNodeFile
 
         $pdfTime = $this->getPdfFile()->getMTime();
 
-        if ($pdfTime < $mdTime) {
+        if ($pdfTime <= $mdTime) {
             return true;
         }
 
@@ -164,7 +164,7 @@ class DocNodeFile
     {
         $output = WeasyPrint::prepareSource($this->getRenderable('pdf'))->build();
 
-        $this->getPdfStorage()->put("{$this->relativePathWithNoSuffix}.pdf", $output->getData());
+        $this->getPdfStorage()->put("build/{$this->relativePathWithNoSuffix}.pdf", $output->getData());
     }
 
     private function getPdfStorage()

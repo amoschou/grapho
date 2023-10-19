@@ -160,6 +160,36 @@ class DocFolder extends SplFileInfo
         ];
     }
 
+    public function arrayContents($currentLevel = 0, $maxDepth = null)
+    {
+        $listItems = [];
+
+        if (is_null($maxDepth) || ($currentLevel <= $maxDepth)) {
+            $currentLevel++;
+
+            foreach ($this->getChildren() as $child) {
+                if (is_null($maxDepth) || ($currentLevel <= $maxDepth)) {
+                    $childLabel = $child->getLabel();
+                    $childTitle = $child->getTitle();
+
+                    $listItems[] = [
+                        'child' => $child,
+                        'label' => $childLabel,
+                        'title' => $childTitle,
+                    ];
+                }
+
+                if ($child instanceof DocFolder) {
+                    $listItems = array_merge($listItems, $child->arrayContents($currentLevel, $maxDepth));
+                }
+            }
+
+            $currentLevel--;
+        }
+
+        return $listItems;
+    }
+
     // public function objectTree()
     // {
     //     foreach ($this->getTree() as $key => $val) {
