@@ -2,6 +2,8 @@
 
 namespace AMoschou\Grapho\App\Http\Controllers;
 
+use AMoschou\Grapho\App\Classes\DocFile;
+use AMoschou\Grapho\App\Classes\DocFolder;
 use AMoschou\Grapho\App\Tasks\GeneratePdf;
 use mikehaertl\pdftk\Pdf;
 use Spatie\Async\Pool;
@@ -58,7 +60,7 @@ class PdfController
 
     public function buildPdfs()
     {
-        $doc = new \AMoschou\Grapho\App\Classes\DocFolder(config('grapho.source_path'));
+        $doc = new DocFolder(config('grapho.source_path'));
 
         $arr = $doc->arrayContents();
 
