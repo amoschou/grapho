@@ -70,7 +70,9 @@ class PdfController
             }
 
             if ($page['child'] instanceof DocFile) {
-                $output = WeasyPrint::prepareSource($page['child']->getRenderable('pdf'))->build();
+                $docNodeFile = new DocNodeFile($page['relpath']);
+
+                $output = WeasyPrint::prepareSource($docNodeFile->getRenderable('pdf'))->build();
 
                 Storage::build([
                     'driver' => 'local',
