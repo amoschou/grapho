@@ -97,7 +97,7 @@ class DocFolder2
         $tree = [];
 
         foreach ($orderedList as $item) {
-            $realPathToItem = $this->getRealPath() . '/' . $item;
+            $realPathToItem = $this->splFileInfo->getRealPath() . '/' . $item;
 
             if (is_file($realPathToItem)) {
                 $tree[$item] = null;
