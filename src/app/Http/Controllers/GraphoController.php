@@ -19,8 +19,6 @@ class GraphoController extends Controller
     }
 
     public static function tableOfContents2 () {
-        $root = config('grapho.source_path');
-
-        return (new DocFolder2($root))->getChildrenTree();
+        return (new DocFolder2 ())->getChildrenTree();
     }
 }
