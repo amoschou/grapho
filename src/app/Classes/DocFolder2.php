@@ -23,11 +23,11 @@ class DocFolder2
     private $defaultOrd = 0;
     private $metadataFilename = '_index.yaml';
 
-    public function __construct($relativePath)
+    public function __construct($relativePath = '')
     {
         $this->sourcePath = config('grapho.source_path');
         $this->relativePath = $relativePath;
-        $this->fullPath = "{$this->sourcePath}/{$this->relativePath}";
+        $this->fullPath = $this->sourcePath . ($relativePath === '' ? '' : '/') . $this->relativePath;
         $this->splFileInfo = new SplFileInfo($this->fullPath);
         // $this->legacyDocFolder = new LegacyDocFolder($this->fullPath);
         $this->childrenTree = $this->constructChildrenTree();
