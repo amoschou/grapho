@@ -32,7 +32,7 @@ Route::middleware($middleware)->group(function () {
     Route::get('/pdf/section/{section}', [PdfController::class, 'section']);
 
     Route::get('/', function () {
-        $tocNode = GraphoController::tableOfContents();
+        $tocNode = GraphoController::tableOfContents2();
 
         $comments = GraphoComment::where('path', '')->orderBy('created_at')->get();
 
