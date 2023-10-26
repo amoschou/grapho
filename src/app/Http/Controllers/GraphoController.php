@@ -12,11 +12,11 @@ use Illuminate\Support\Facades\Storage;
 
 class GraphoController extends Controller
 {
-    // public static function tableOfContents () {
-    //     $toc = (new DocFolder (config('grapho.source_path')))->getChildren();
+    public static function tableOfContents () {
+        $toc = (new DocFolder (config('grapho.source_path')))->getChildren();
 
-    //     return $toc;
-    // }
+        return $toc;
+    }
 
     public static function tableOfContents2 () {
         return (new DocFolder2 ())->getChildrenTree();
