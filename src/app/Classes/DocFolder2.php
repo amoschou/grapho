@@ -2,7 +2,7 @@
 
 namespace AMoschou\Grapho\App\Classes;
 
-use AMoschou\Grapho\App\Classes\DocFolder as LegacyDocFolder;
+// use AMoschou\Grapho\App\Classes\DocFolder as LegacyDocFolder;
 use SplFileInfo;
 use Symfony\Component\Yaml\Yaml;
 use Throwable;
@@ -16,7 +16,7 @@ class DocFolder2
     private string $sourcePath;
     private string $relativePath;
     private string $fullPath;
-    private LegacyDocFolder $legacyDocFolder;
+    // private LegacyDocFolder $legacyDocFolder;
     private SplFileInfo $splFileInfo;
     private array $childrenTree;
     private $metadata;
@@ -29,7 +29,7 @@ class DocFolder2
         $this->relativePath = $relativePath;
         $this->fullPath = "{$this->sourcePath}/{$this->relativePath}";
         $this->splFileInfo = new SplFileInfo($this->fullPath);
-        $this->legacyDocFolder = new LegacyDocFolder($this->fullPath);
+        // $this->legacyDocFolder = new LegacyDocFolder($this->fullPath);
         $this->childrenTree = $this->constructChildrenTree();
         $this->constructMetadata(); // after new splFileInfo
     }
