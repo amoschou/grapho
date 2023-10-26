@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Storage;
 
 class DocFolder2
 {
-    use trait DocFolderOrFile2;
+    use DocFolderOrFile2;
 
     private string $sourcePath;
     private string $relativePath;
