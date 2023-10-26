@@ -278,6 +278,6 @@ class DocNodeFile
     {
         $this->refreshPdfFile();
 
-        return $this->getPdfStorage()->download("{$this->relativePathWithNoSuffix}.pdf");
+        return $this->getPdfStorage()->download("build/{$this->relativePathWithNoSuffix}.pdf");
     }
 }

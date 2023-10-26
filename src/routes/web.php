@@ -36,10 +36,10 @@ Route::middleware($middleware)->group(function () {
 
         $comments = GraphoComment::where('path', '')->orderBy('created_at')->get();
 
-        $pdf = array_key_exists('pdf', request()->query());
+        $isPdf = array_key_exists('pdf', request()->query());
 
         $renderable = view('grapho::page', [
-            'online' => ! $pdf,
+            'online' => ! $isPdf,
             'htmlContent' => '<h1>' . config('app.name', 'Laravel') . '</h1>',
             'tocNode' => $tocNode,
             'editLink' => '#',
@@ -51,7 +51,7 @@ Route::middleware($middleware)->group(function () {
             'title' => null,
         ]);
 
-        if ($pdf) {
+        if ($isPdf) {
             $method = request()->query('pdf', 'inline');
 
             $output = WeasyPrint::prepareSource($renderable)->build();
