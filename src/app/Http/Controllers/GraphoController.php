@@ -4,6 +4,7 @@ namespace AMoschou\Grapho\App\Http\Controllers;
 
 use AMoschou\Grapho\App\Classes\DocFile;
 use AMoschou\Grapho\App\Classes\DocFolder;
+use AMoschou\Grapho\App\Classes\DocFolder2;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
