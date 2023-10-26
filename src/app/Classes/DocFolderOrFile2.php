@@ -1,6 +1,6 @@
 <?php
 
-namespace AMoschou\Grapho\App\Classes\Traits;
+namespace AMoschou\Grapho\App\Classes;
 
 use AMoschou\Grapho\App\Classes\DocFile;
 use AMoschou\Grapho\App\Classes\DocFolder;
